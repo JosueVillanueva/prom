@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+.main-c{
+  margin-top: 30px;
+}
+.notanto{
+  max-height: 250px;
+  overflow: auto;
+}
+.noblock{
+  display: inline-grid;
+}
+.red{
+  color: red;
+  text-align: center;
+}
+.cursorsito{
+  cursor: pointer;
+}
+.mar-left-10{
+  margin-left: 10px;
+}
+.font12{
+  font-size: 12px;
+}
+.loader {
+    border: 2px solid #f3f3f3; /* Light grey */
+    border-top: 2px solid #ff015d; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin .7s linear infinite;
+}
+.min480{
+  min-height: 480px;
+  max-height: 480px;
+}
+agm-map {
+  height: 400px;
+}
+.footer{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.invalid{
+  border-color: red;
+}
+.invalid:focus{
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+.show{
+  display: inline-block;
+}
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

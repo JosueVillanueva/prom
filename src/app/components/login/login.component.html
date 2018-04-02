@@ -1,0 +1,33 @@
+<div class="container animated fadeIn">
+  <div class="row align-items-center">
+    <div class="col align-self-start">
+
+    </div>
+    <div class="col align-self-center" style="margin-top:6%;">
+      <div class="card" style="width: 18rem; border-color: #ff015d; ">
+        <img class="card-img-to" src="../assets/img/logo-Daniela.png" style="width:250px; padding:5%; margin-left:5%;" alt="Card image cap">
+        <hr>
+        <div class="card-body">
+          <form *ngIf="spin==false" (ngSubmit)="logear(forma)" #forma="ngForm" novalidate>
+            <div class="form-row">
+              <div class="col-md-12 text-center">
+                <label for="password">PROMOVIDOS</label>
+                <input type="text" style="margin-bottom: 10px;" autocomplete="off" class="form-control" [ngClass]="{invalid:elerror === true}" id="user" placeholder="Usuario" #user name="user" ngModel required>
+                <input type="password" class="form-control" [ngClass]="{invalid:elerror === true}" id="password" placeholder="Ingrese contraseña" #password name="password" ngModel required>
+                <div class="invalid-feedback" [ngClass]="{show:elerror === true}">
+                  Contraseña o usuario incorrecto
+                </div>
+                <input type="submit" class="form-control cursorsito btn btn-outline-success text-white" style="margin-top: 15px; border-color: #ff015d;  background-color:#ff015d;" id="send" value="INGRESAR">
+              </div>
+            </div>
+          </form>
+          <div class="w-50 p-3" *ngIf="spin==true" style="margin-left:18%;">
+            <div class="loader mx-auto"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="col align-self-end">
+
+  </div>
+</div>
