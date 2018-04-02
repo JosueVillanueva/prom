@@ -12,7 +12,8 @@ export class LoginComponent{
   pass = "quinta2018";
   elerror:boolean=false;
   spin:boolean=false;
-  constructor(private r:Router,public h:HomeComponent) {
+  result:string;
+  constructor(private r:Router,public h:HomeComponent, public ht:HttpService) {
     if(localStorage.getItem('access_token')){
       localStorage.removeItem('access_token');
       localStorage.removeItem('username');
@@ -21,14 +22,19 @@ export class LoginComponent{
 
   logear(form:any){
     this.spin=true;
-    console.log(this.spin);
-    if(form.value.password==this.pass){
-      setTimeout(()=>{
-        this.h.setSession();
-        this.r.navigate(['/home']);
-      },3000);
-    }else{
-      setTimeout(()=>{ this.elerror=true; this.spin=false;}, 3000);
-    }
+    this.ht.getlogin(form.value.user,form.value.password).subscribe((resp:any)=>{
+      console.log(resp);
+      this.result = resp;
+      console.log(this.result);
+    });
+    setTimeout(()=>{
+      if(this.result=="correcto"){
+        setTimeout(()=>{
+          this.r.navigate(['/home']);
+        },3000);
+      }else{
+        setTimeout(()=>{ this.elerror=true; this.spin=false;}, 3000);
+      }
+    },2000);
   }
 }
