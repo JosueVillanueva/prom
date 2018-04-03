@@ -8,12 +8,18 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import {HttpClientModule} from '@angular/common/http';
+import { PromovidosComponent } from './components/promovidos/promovidos.component';
+import { PromoverComponent } from './components/promover/promover.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    PromovidosComponent,
+    PromoverComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,9 @@
 .noblock{
   display: inline-grid;
 }
+.homelogo{
+  margin-top: 3%;
+}
 .red{
   color: red;
   text-align: center;

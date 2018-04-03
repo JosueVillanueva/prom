@@ -13,6 +13,7 @@ export class LoginComponent{
   elerror:boolean=false;
   spin:boolean=false;
   result:string;
+  user:any;
   constructor(private r:Router,public h:HomeComponent, public ht:HttpService) {
     if(localStorage.getItem('access_token')){
       localStorage.removeItem('access_token');
@@ -23,13 +24,13 @@ export class LoginComponent{
   logear(form:any){
     this.spin=true;
     this.ht.getlogin(form.value.user,form.value.password).subscribe((resp:any)=>{
-      console.log(resp);
-      this.result = resp;
-      console.log(this.result);
+      this.result = resp.resultado;
+      this.user = resp;
     });
     setTimeout(()=>{
       if(this.result=="correcto"){
         setTimeout(()=>{
+          this.h.setSession(this.user);
           this.r.navigate(['/home']);
         },3000);
       }else{
