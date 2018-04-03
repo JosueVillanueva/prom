@@ -13,4 +13,9 @@ export class HttpService {
       return respuesta
     });
   }
+  getsecciones(){
+    return this.http.get("http://mapinfomich.com/Promovidos/getSecciones.php").map((respuesta:any)=>{
+      return respuesta
+    });
+  }
 }

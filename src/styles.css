@@ -25,6 +25,11 @@
 .font12{
   font-size: 12px;
 }
+.textprom{
+  width: 100%;
+  resize: none;
+  height: 100px;
+}
 legend {
   display: block;
   width: 100%;
