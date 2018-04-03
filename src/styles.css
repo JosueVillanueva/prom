@@ -25,6 +25,20 @@
 .font12{
   font-size: 12px;
 }
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 40px;
+  line-height: inherit;
+  color: #333;
+  border: 0;
+  border-bottom: 1px solid #ff015d;
+}
+label{
+  color: #ff015d;
+}
 .loader {
     border: 2px solid #f3f3f3; /* Light grey */
     border-top: 2px solid #ff015d; /* Blue */
