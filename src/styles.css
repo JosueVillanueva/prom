@@ -25,6 +25,12 @@
 .font12{
   font-size: 12px;
 }
+.min600{
+  min-height: 600px;
+}
+.min550{
+  min-height: 550px;
+}
 .textprom{
   width: 100%;
   resize: none;
@@ -67,9 +73,29 @@ agm-map {
 .invalid{
   border-color: red;
 }
+.margr10{
+  margin-right: 10px;
+}
+.agregarb{
+  margin-bottom: 10px;
+  background-color: #ff015d;
+  border-color: #ff015d;
+  left: 93%;
+  position: relative;
+}
+.agregarb:hover{
+  background-color: #ff015d;
+}
 .invalid:focus{
   border-color: #dc3545;
   box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+.modal-backdrop.show {
+    display: none;
+}
+.page-item.active .page-link{
+  background-color: #FF015D;
+  border-color: #FF015D;
 }
 .show{
   display: inline-block;

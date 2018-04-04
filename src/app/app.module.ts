@@ -12,6 +12,9 @@ import { PromovidosComponent } from './components/promovidos/promovidos.componen
 import { PromoverComponent } from './components/promover/promover.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ResponsablesComponent } from './components/responsables/responsables.component';
+import { AgmCoreModule } from '@agm/core';
+import { NewresponsableComponent } from './components/newresponsable/newresponsable.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,11 +24,15 @@ import { ResponsablesComponent } from './components/responsables/responsables.co
     PromovidosComponent,
     PromoverComponent,
     UsuariosComponent,
-    ResponsablesComponent
+    ResponsablesComponent,
+    NewresponsableComponent
   ],
   imports: [
     BrowserModule,
     app_routing,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCHrEclbeTPI_e9XHupK7dXxoq9P_apj48'
+    }),
     FormsModule,
     HttpClientModule
   ],

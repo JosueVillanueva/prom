@@ -7,10 +7,14 @@ import {HttpService} from '../../services/http.service';
 })
 export class PromoverComponent implements OnInit {
   secciones:any;
+  spin:boolean=true;
   constructor(public h:HttpService) {
+    setTimeout(()=>{
     this.h.getsecciones().subscribe((resp:any)=>{
       this.secciones = resp;
     });
+      this.spin = false;
+    },1500);
   }
 
   ngOnInit() {

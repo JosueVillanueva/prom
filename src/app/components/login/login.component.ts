@@ -9,7 +9,6 @@ import {HttpService} from '../../services/http.service';
   providers:[HomeComponent]
 })
 export class LoginComponent{
-  pass = "quinta2018";
   elerror:boolean=false;
   spin:boolean=false;
   result:string;
