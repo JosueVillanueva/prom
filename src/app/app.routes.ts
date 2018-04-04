@@ -5,12 +5,14 @@ import {LoginComponent} from './components/login/login.component';
 import {PromoverComponent} from './components/promover/promover.component';
 import {PromovidosComponent} from './components/promovidos/promovidos.component';
 import {UsuariosComponent} from './components/usuarios/usuarios.component';
+import {ResponsablesComponent} from './components/responsables/responsables.component';
 
 const APP_ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'promovidos', component: PromovidosComponent },
   { path: 'promover', component: PromoverComponent },
   { path: 'usuarios', component: UsuariosComponent },
+  { path: 'responsables', component: ResponsablesComponent },
   { path: 'login', component: LoginComponent },
   { path:'**', pathMatch:'full', redirectTo:'home'}
 ];

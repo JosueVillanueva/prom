@@ -11,6 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { PromovidosComponent } from './components/promovidos/promovidos.component';
 import { PromoverComponent } from './components/promover/promover.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ResponsablesComponent } from './components/responsables/responsables.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
     LoginComponent,
     PromovidosComponent,
     PromoverComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    ResponsablesComponent
   ],
   imports: [
     BrowserModule,
