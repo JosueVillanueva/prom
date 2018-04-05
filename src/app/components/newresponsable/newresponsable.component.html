@@ -8,18 +8,18 @@
     <div *ngIf="spin==true" class="mx-auto w-100 p-3" style="margin-left: 20%;margin-top: 13%;">
        <div class="loader mx-auto" *ngIf="spin==true"></div>
      </div>
-    <form *ngIf="spin==false" class="needs-validation col-sm-12" novalidate>
+    <form *ngIf="spin==false" (ngSubmit)="newresp(forma)" #forma="ngForm" class="needs-validation col-sm-12" novalidate>
 <div  class="form-row">
 <div class="col-md-3 mb-3">
   <label for="validationCustom01">Nombre(s)</label>
-  <input type="text" class="form-control" id="validationCustom01" placeholder="Ingrese nombre(s)" required>
+  <input type="text" class="form-control" id="validationCustom01" ngModel #nombre name="nombre" placeholder="Ingrese nombre(s)" required>
   <div class="valid-feedback">
     Looks good!
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom02">Apellido paterno</label>
-  <input type="text" class="form-control" id="validationCustom02" placeholder="Ingrese apellido paterno" required>
+  <input type="text" class="form-control" id="validationCustom02" ngModel #paterno name="paterno" placeholder="Ingrese apellido paterno" required>
   <div class="valid-feedback">
     Looks good!
   </div>
@@ -27,81 +27,78 @@
 <div class="col-md-3 mb-3">
   <label for="validationCustomUsername">Apellido materno</label>
   <div class="input-group">
-    <input type="text" class="form-control" id="validationCustomUsername" placeholder="Ingrese apellido materno" aria-describedby="inputGroupPrepend" required>
+    <input type="text" class="form-control" id="validationCustomUsername" ngModel #materno name="materno" placeholder="Ingrese apellido materno" aria-describedby="inputGroupPrepend" required>
     <div class="invalid-feedback">
       Please choose a username.
     </div>
   </div>
 </div>
+</div>
+<div  class="form-row">
 <div class="col-md-3 mb-3">
   <label for="validationCustomUsername">Sexo</label>
   <div class="input-group">
-    <select class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+    <select class="form-control" id="validationCustomUsername" ngModel #sexo name="sexo" required>
       <option value="0">Seleccione sexo</option>
-      <option value="M">Masculino</option>
-      <option value="F">Femenino</option>
+      <option *ngFor="let sex of sexos" value="{{sex.id}}">{{sex.texto}}</option>
     </select>
     <div class="invalid-feedback">
       Please choose a username.
     </div>
   </div>
 </div>
-</div>
-<div class="form-row">
 <div class="col-md-6 mb-3">
   <label for="validationCustom03">Dirección</label>
-  <input type="text" class="form-control" id="validationCustom03" placeholder="Ingrese calle" name="calle" required>
+  <input type="text" class="form-control" id="validationCustom03" ngModel #direccion name="direccion" placeholder="Ingrese dirección" required>
   <div class="invalid-feedback">
     Please provide a valid city.
   </div>
 </div>
+</div>
+<div  class="form-row">
 <div class="col-md-3 mb-3">
   <label for="validationCustom04">Teléfono</label>
-  <input type="text" class="form-control" id="validationCustom04" placeholder="Int" name="interior" required>
+  <input type="text" class="form-control" id="validationCustom04" ngModel #telefono name="telefono" placeholder="(443)" required>
   <div class="invalid-feedback">
     Please provide a valid state.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Correo</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Ext" name="exterior" required>
+  <input type="text" class="form-control" id="validationCustom05" ngModel #correo placeholder="ejemplo@ejemplo.com" name="correo" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom05">Edad</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Edad" name="edad" required>
+  <input type="text" class="form-control" id="validationCustom05" ngModel #edad placeholder="Edad" name="edad" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
+</div>
+<div  class="form-row">
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Tipo</label>
-  <select class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-    <option value="0">Seleccione tipo</option>
-    <option value="Municipal">Municipal</option>
-    <option value="Distrital">Distrital</option>
-    <option value="Seccional">Seccional</option>
+  <select class="form-control" id="validationCustomUsername" ngModel #tipo name='tipo' required>
+    <option value="0" selected>Seleccione Tipo</option>
+    <option *ngFor="let food of units" value="{{food.id}}">{{food.label}}</option>
   </select>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
-<div class="col-md-3 mb-3">
+<div class="col-md-8 mb-3">
   <label for="validationCustom05">Municipio/Distrito/Sección</label>
-  <select class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-    <option value="0">Seleccione tipo</option>
-    <option value="Municipal">Municipal</option>
-    <option value="Distrital">Distrital</option>
-    <option value="Seccional">Seccional</option>
-  </select>
+  <input type="text" class="form-control" id="validationCustomUsername" placeholder="Ingrese las secciones separadas por coma" ngModel #seccion name="seccion" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
+<img src="../../assets/img/responsables/nousuario.jpg" class="ml-3 img-thumbnail img-fluid" style="width: 23%; height:300px; right: 0px; position: absolute; top:0px;">
 </div>
-
+{{names}}
 <button class="btn btn-primary" style="background-color: #ff015d; border-color: #ff015d; float: right;" type="submit">Registrar</button>
 </form>
 

@@ -6,6 +6,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewresponsableComponent implements OnInit {
   spin:boolean=true;
+  units = [
+        {'id': 'Municipal', 'label': 'Municipal'},
+        {'id': 'Distrital', 'label': 'Distrital'},
+        {'id': 'Seccional', 'label': 'Seccional'},
+    ];
+  sexos = [
+    {'id':'Hombre', 'texto':'Masculino'},
+    {'id':'Mujer', 'texto':'Femenino'}
+  ];
   constructor() {
     setTimeout(()=>{
 
@@ -14,6 +23,10 @@ export class NewresponsableComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  newresp(form:any){
+    console.log(form);
   }
 
 }
