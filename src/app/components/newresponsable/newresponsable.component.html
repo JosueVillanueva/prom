@@ -1,3 +1,4 @@
+
 <div>
   <app-navbar></app-navbar>
   <div class="container animated fadeIn">
@@ -77,9 +78,8 @@
     Please provide a valid zip.
   </div>
 </div>
-</div>
-<div  class="form-row">
-<div class="col-md-3 mb-3">
+
+<div class="col-md-2 mb-3">
   <label for="validationCustom05">Tipo</label>
   <select class="form-control" id="validationCustomUsername" ngModel #tipo name='tipo' required>
     <option value="0" selected>Seleccione Tipo</option>
@@ -89,14 +89,23 @@
     Please provide a valid zip.
   </div>
 </div>
-<div class="col-md-8 mb-3">
+</div>
+<div  class="form-row">
+<div class="col-md-9 mb-3">
   <label for="validationCustom05">Municipio/Distrito/Sección</label>
   <input type="text" class="form-control" id="validationCustomUsername" placeholder="Ingrese las secciones separadas por coma" ngModel #seccion name="seccion" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
-<img src="../../assets/img/responsables/nousuario.jpg" class="ml-3 img-thumbnail img-fluid" style="width: 23%; height:300px; right: 0px; position: absolute; top:0px;">
+<div class="col-md-3 mb-3">
+  <label for="validationCustom05"></label>
+  <input type="file" ngFileSelect
+       [options]="options"
+       (onUpload)="handleUpload($event)"
+       (beforeUpload)="beforeUpload($event)">
+</div>
+<img [src]="url" id="preview" class="ml-3 img-thumbnail img-fluid" style="width: 23%; height:270px; right: 0px; position: absolute; top:0px;">
 </div>
 {{names}}
 <button class="btn btn-primary" style="background-color: #ff015d; border-color: #ff015d; float: right;" type="submit">Registrar</button>
@@ -104,6 +113,7 @@
 
 <script>
 // Example starter JavaScript for disabling form submissions if there are invalid fields
+
 (function() {
 'use strict';
 window.addEventListener('load', function() {

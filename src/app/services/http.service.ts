@@ -23,6 +23,15 @@ export class HttpService {
       return respuesta;
     });
   }
+  setResponsables(form:any){
+    let headersito= new HttpHeaders({
+      'Content-Type': "image/jpeg",
+      'Access-Control-Allow-Origin':'*'
+    });
+    return this.http.post("http://mapinfomich.com/Promovidos/setResponsables.php",form,{headers:headersito}).map((respuesta:any)=>{
+      return respuesta;
+    });
+  }
   getCoord(calle:string,mun:string){
     return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD9nZzYt7v6D-LqdTflCQ9PUb9S9z7HkOQ&address="+calle+" "+mun, ).map((respuesta:any)=>{return respuesta});
   }
