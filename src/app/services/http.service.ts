@@ -23,12 +23,23 @@ export class HttpService {
       return respuesta;
     });
   }
+  getpromovidos(cual:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/getPromovidos.php?cual="+cual).map((respuesta:any)=>{
+      return respuesta;
+    });
+  }
   setResponsables(form:any){
+    console.log("el form "+form.imagen);
     let headersito= new HttpHeaders({
       'Content-Type': "image/jpeg",
       'Access-Control-Allow-Origin':'*'
     });
     return this.http.post("http://mapinfomich.com/Promovidos/setResponsables.php",form,{headers:headersito}).map((respuesta:any)=>{
+      return respuesta;
+    });
+  }
+  getrespProm(cual:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/getRespProm.php?cual="+cual).map((respuesta:any)=>{
       return respuesta;
     });
   }

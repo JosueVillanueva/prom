@@ -5,21 +5,33 @@
     <div class="col-sm-12">
         <legend style="color: #ff015d">Agregar promovido:</legend>
     </div>
+    <div *ngIf="spin==false && success==true" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>!Excelente!</strong>{{mensajes}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="spin==false && error==true" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>!Algo salió mal!</strong>{{mensajer}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div *ngIf="spin==true" class="mx-auto w-100 p-3" style="margin-left: 20%;margin-top: 13%;">
        <div class="loader mx-auto" *ngIf="spin==true"></div>
      </div>
-    <form *ngIf="spin==false" class="needs-validation col-sm-12" novalidate>
+    <form *ngIf="spin==false" (ngSubmit)="newprom(forma)" #forma="ngForm" class="needs-validation col-sm-12" novalidate>
 <div  class="form-row">
 <div class="col-md-3 mb-3">
   <label for="validationCustom01">Nombre(s)</label>
-  <input type="text" class="form-control" id="validationCustom01" placeholder="Ingrese nombre(s)" required>
+  <input type="text" class="form-control" id="validationCustom01" #nombre name="nombre" ngModel placeholder="Ingrese nombre(s)" required>
   <div class="valid-feedback">
     Looks good!
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom02">Apellido paterno</label>
-  <input type="text" class="form-control" id="validationCustom02" placeholder="Ingrese apellido paterno" required>
+  <input type="text" class="form-control" id="validationCustom02" #paterno name="paterno" ngModel placeholder="Ingrese apellido paterno" required>
   <div class="valid-feedback">
     Looks good!
   </div>
@@ -27,7 +39,7 @@
 <div class="col-md-3 mb-3">
   <label for="validationCustomUsername">Apellido materno</label>
   <div class="input-group">
-    <input type="text" class="form-control" id="validationCustomUsername" placeholder="Ingrese apellido materno" aria-describedby="inputGroupPrepend" required>
+    <input type="text" class="form-control" id="validationCustomUsername" #materno name="materno" ngModel placeholder="Ingrese apellido materno" aria-describedby="inputGroupPrepend" required>
     <div class="invalid-feedback">
       Please choose a username.
     </div>
@@ -36,10 +48,10 @@
 <div class="col-md-3 mb-3">
   <label for="validationCustomUsername">Sexo</label>
   <div class="input-group">
-    <select class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+    <select class="form-control" id="validationCustomUsername" #sexo name="sexo" ngModel aria-describedby="inputGroupPrepend" required>
       <option value="0">Seleccione sexo</option>
-      <option value="M">Masculino</option>
-      <option value="F">Femenino</option>
+      <option value="Hombre">Masculino</option>
+      <option value="Mujer">Femenino</option>
     </select>
     <div class="invalid-feedback">
       Please choose a username.
@@ -50,56 +62,56 @@
 <div class="form-row">
 <div class="col-md-4 mb-3">
   <label for="validationCustom03">Calle</label>
-  <input type="text" class="form-control" id="validationCustom03" placeholder="Ingrese calle" name="calle" required>
+  <input type="text" class="form-control" id="validationCustom03" #calle name="calle" ngModel placeholder="Ingrese calle" name="calle" required>
   <div class="invalid-feedback">
     Please provide a valid city.
   </div>
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom04">N° Interior</label>
-  <input type="text" class="form-control" id="validationCustom04" placeholder="Int" name="interior" required>
+  <input type="text" class="form-control" id="validationCustom04" #interior name="interior" ngModel placeholder="Int" name="interior" required>
   <div class="invalid-feedback">
     Please provide a valid state.
   </div>
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom05">N° Exterior</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Ext" name="exterior" required>
+  <input type="text" class="form-control" id="validationCustom05" #exterior name="exterior" ngModel placeholder="Ext" name="exterior" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-6 mb-3">
   <label for="validationCustom05">Colonia</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Ingrese colonia" name="colonia" required>
+  <input type="text" class="form-control" id="validationCustom05" #colonia name="colonia" ngModel placeholder="Ingrese colonia" name="colonia" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom05">Edad</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Edad" name="edad" required>
+  <input type="text" class="form-control" id="validationCustom05" #edad name="edad" ngModel placeholder="Edad" name="edad" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Clave Elector</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="18 digitos" maxlength="18" name="claveele" required>
+  <input type="text" class="form-control" id="validationCustom05" #elector name="elector" ngModel placeholder="18 digitos" maxlength="18" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Fecha Nacimiento</label>
-  <input type="date" class="form-control" id="validationCustom05" name="fechan" required>
+  <input type="date" class="form-control" id="validationCustom05" #nac name="nac" ngModel required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Sección</label>
-  <select class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+  <select class="form-control" id="validationCustomUsername" (change)="elegirR(seccion.value)" #seccion name="seccion" ngModel aria-describedby="inputGroupPrepend" required>
     <option value="0">Seleccione sección</option>
     <option *ngFor="let seccion of secciones" value="{{seccion.seccion}}">{{seccion.seccion}}</option>
   </select>
@@ -109,66 +121,67 @@
 </div>
 <div class="col-md-2 mb-3">
   <label for="validationCustom05">Teléfono</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="10 digitos" maxlength="10" name="claveele" required>
+  <input type="text" class="form-control" id="validationCustom05" #telefono name="telefono" ngModel placeholder="10 digitos" maxlength="10" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Celular</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="10 digitos" maxlength="10" name="claveele" required>
+  <input type="text" class="form-control" id="validationCustom05" #celular name="celular" ngModel placeholder="10 digitos" maxlength="10"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Correo</label>
-  <input type="email" class="form-control" id="validationCustom05" placeholder="Ingrese correo" name="claveele" required>
+  <input type="email" class="form-control" id="validationCustom05" #correo name="correo" ngModel placeholder="Ingrese correo"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Facebook</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Ingrese facebook" name="claveele" required>
+  <input type="text" class="form-control" id="validationCustom05" #face name="face" ngModel placeholder="Ingrese facebook"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Twitter</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Ingrese twitter" name="claveele" required>
+  <input type="text" class="form-control" id="validationCustom05" #twit name="twit" ngModel placeholder="Ingrese twitter" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-4 mb-3">
   <label for="validationCustom05">Responsable Municipal</label>
-    <input type="text" class="form-control" id="validationCustom05" placeholder="Responsable Municipal" name="claveele" readonly required>
+    <input type="text" class="form-control" value="{{seccionales.Municipal}}" placeholder="Responsable Municipal" readonly>
+    <input type="text" style="display: none;" id="validationCustom05" [(ngModel)]="seccionales.Municipal" #respmun name="respmun" ngModel placeholder="Responsable Municipal"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-4 mb-3">
   <label for="validationCustom05">Responsable distrital</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Responsable distrital" name="claveele" readonly required>
+  <input type="text" class="form-control" value="{{seccionales.Distrital}}" placeholder="Responsable Distrital" readonly>
+  <input type="text" style="display: none;" class="form-control" id="validationCustom05" [(ngModel)]="seccionales.Distrital" #respdis name="respdis" ngModel placeholder="Responsable distrital"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-4 mb-3">
   <label for="validationCustom05">Responsable seccional</label>
-  <input type="text" class="form-control" id="validationCustom05" placeholder="Responsable seccional" name="claveele" readonly required>
+  <input type="text" class="form-control" value="{{seccionales.Seccional}}" placeholder="Responsable Seccional" readonly>
+  <input type="text" style="display: none;" class="form-control" id="validationCustom05" [(ngModel)]="seccionales.Seccional" #respsec name="respsec" ngModel placeholder="Responsable seccional"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-4 mb-3">
   <label for="validationCustom05">Origen de información</label>
-  <select class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+  <select class="form-control" id="validationCustomUsername" #origen name="origen" ngModel aria-describedby="inputGroupPrepend" required>
     <option value="0">Seleccione sexo</option>
-    <option value="M">Masculino</option>
-    <option value="F">Femenino</option>
   </select>
   <div class="invalid-feedback">
     Please provide a valid zip.
@@ -176,7 +189,7 @@
 </div>
 <div class="col-md-12 mb-3">
   <label for="validationCustom05">Observaciones</label>
-  <textarea class="form-control textprom" placeholder="Observaciones"></textarea>
+  <textarea class="form-control textprom" placeholder="Observaciones" #observaciones name="observaciones" ngModel></textarea>
 </div>
 </div>
 

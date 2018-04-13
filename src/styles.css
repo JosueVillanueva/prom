@@ -36,6 +36,11 @@
   resize: none;
   height: 100px;
 }
+.framesec{
+	width: 100%;
+	overflow: none;
+	height: 650px;
+}
 legend {
   display: block;
   width: 100%;

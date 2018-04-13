@@ -1,4 +1,137 @@
-<div class="animated fadeIn">
+<div>
   <app-navbar></app-navbar>
-  <img src="../assets/img/logo-Daniela.png" class="homelogo img-thumbnail rounded mx-auto d-block img-fluid" alt="Daniela de los Santos">
+  <div class="container animated fadeIn min600">
+	   <div class="row">
+       <div class="col-sm-12">
+           <legend style="color: #ff015d">Promovidos:</legend>
+       </div>
+       <div *ngIf="spin==true" class="mx-auto w-100 p-3" style="margin-left: 20%;margin-top: 13%;">
+          <div class="loader mx-auto" *ngIf="spin==true"></div>
+        </div>
+        <div class="card col-sm-12 min550" style="border-color: #FF015d; padding: 0px; margin-top: 0%;" *ngIf="responsables!=0 && spin==false">
+          <table class="table" style="margin-bottom: 0px;">
+            <thead style="background-color: #ff015d; color: white;">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Sección</th>
+                <th scope="col">Avanzado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="font16" *ngFor="let responsable of responsables | slice: (curPage * pageSize) - pageSize :curPage * pageSize;let i=index">
+                <th scope="row">{{i+1}}</th>
+                <td><a>{{responsable.nombre + " " + responsable.paterno + " " + responsable.materno}}</a></td>
+                <td>{{ responsable.calle }} #{{responsable.exterior}} {{responsable.colonia}}</td>
+                <td>{{ responsable.telefono }}</td>
+                <td>{{ responsable.correo }}</td>
+                <td>{{ responsable.seccion }}</td>
+                <td class="text-center"><a class="icon-eye cursorsito margr10" (click)="showmodal(responsable.nombre+' '+responsable.paterno+' '+responsable.materno,responsable);"></a><a class="icon-pencil cursorsito margr10" (click)="showmodal(responsable.nombre+' '+responsable.paterno+' '+responsable.materno,responsable);"></a><a class="icon-bin cursorsito margr10" (click)="showmodal(responsable.nombre+' '+responsable.paterno+' '+responsable.materno,responsable);"></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col align-self-start">
+    </div>
+        <nav aria-label="Page navigation example col align-self-center" *ngIf="responsables!=0 && spin==false">
+          <ul class="pagination justify-content-center main-c">
+            <li class="page-item" [ngClass]="{disabled:curPage === 1}">
+              <a class="page-link" aria-label="Previous" (click)="curPage = curPage - 1">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item" *ngFor="let p of pages" (click)="curPage=p" [ngClass]="{active:curPage === p}"><a class="page-link">{{p}}</a></li>
+            <li class="page-item" [ngClass]="{disabled:curPage >= responsables.length/pageSize}">
+              <a class="page-link" aria-label="Next" (click)="curPage = curPage + 1">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="col align-self-end">
+   </div>
+   <div class="col-sm-12 min550" style="padding: 0px; margin-top: 0%; margin-bottom: 20px;" *ngIf="spin==false">
+     <iframe class="min550 framesec" border="0" frameborder="0" framespacing="0" src="http://mapinfomich.com/Promovidos/mapademandas.php?id=54" ></iframe>
+   </div>
+   <div class="col-sm-12 min550" [chart]="chart" style="padding: 0px; margin-top: 0%; margin-bottom: 20px;" *ngIf="spin==false">
+
+   </div>
+      </div>
+    </div>
+    <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-center" style="background-color: #FF015D; color: white;">
+        <h5 class="modal-title" id="exampleModalLabel">{{ namefind }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <dl class="row">
+          <div class="col-sm-12">
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Dirección:</dt>
+              <dd class="col-sm-12">{{ direccion }}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Fecha Nac:</dt>
+              <dd class="col-sm-12">{{nac | slice:8:10}}/{{nac | slice:5:7}}/{{nac | slice:0:4}}
+              </dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Edad:</dt>
+              <dd class="col-sm-12">{{edad}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Clv. Elector:</dt>
+              <dd class="col-sm-12">{{elector}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Sección:</dt>
+              <dd class="col-sm-12">{{seccion}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Teléfono:</dt>
+              <dd class="col-sm-12">{{telefono}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Celular:</dt>
+              <dd class="col-sm-12">{{celular}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Correo:</dt>
+              <dd class="col-sm-12">{{correo}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Facebook:</dt>
+              <dd class="col-sm-12">{{face}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Twitter:</dt>
+              <dd class="col-sm-12">{{twit}}</dd>
+            </div>
+            <div class="col-sm-6">
+              <dt class="col-sm-12">Origen:</dt>
+              <dd class="col-sm-12">{{origen}}</dd>
+            </div>
+            <div class="col-sm-12">
+              <dt class="col-sm-12">Observaciones:</dt>
+              <dd class="col-sm-12">{{observaciones}}</dd>
+            </div>
+          </div>
+        </dl>
+        <div class="p-3 mb-2 bg-danger text-white text-center" *ngIf="errormapa==true">Hubo un error al momento de cargar el mapa</div>
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="14" [usePanning]='true' *ngIf="errormapa!=true">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        </agm-map>
+      </div>
+    </div>
+  </div>
+</div>
 </div>

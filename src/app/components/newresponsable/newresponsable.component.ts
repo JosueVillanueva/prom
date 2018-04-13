@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../../services/http.service';
+import {HttpClient,HttpHeaders} from '@angular/common/http';
 
 declare var $:any;
 @Component({
@@ -18,11 +19,16 @@ export class NewresponsableComponent implements OnInit {
     {'id':'Mujer', 'texto':'Femenino'}
   ];
   url="../../assets/img/responsables/nousuario.jpg";
-  files:File;
-  respuesta:string;
-  constructor(public ht:HttpService) {
+  files:File=null;
+  selectedFiles:File=null;
+  respimagen:string;
+  error:boolean=false;
+  mensajer:string;
+  respbd:string;
+  success:boolean;
+  mensajes:string;
+  constructor(public ht:HttpService,public http:HttpClient) {
     setTimeout(()=>{
-
       this.spin = false;
     },1500);
   }
@@ -35,55 +41,69 @@ export class NewresponsableComponent implements OnInit {
     }
     reader.readAsDataURL(event.target.files[0]);
     this.files = event.srcElement.files;
-    console.log(this.files);
-  }
-}
-uploadFile: any;
-hasBaseDropZoneOver: boolean = false;
-options: Object = {
-  url: 'http://mapinfomich.com/Promovidos/imagenes'
-};
-sizeLimit = 2000000;
-
-handleUpload(data): void {
-  if (data && data.response) {
-    data = JSON.parse(data.response);
-    this.uploadFile = data;
+    this.selectedFiles = <File>event.target.files[0];
   }
 }
 
-fileOverBase(e:any):void {
-  this.hasBaseDropZoneOver = e;
-}
-
-beforeUpload(uploadingFile): void {
-  if (uploadingFile.size > this.sizeLimit) {
-    uploadingFile.setAbort();
-    alert('File is too large');
-  }
-}
   ngOnInit() {
   }
 
   newresp(form:any){
-    let data : {
-      name: string;
-      file: File;
-    } = {
-      name: "Name",
-      file: this.files
-      };
-    //let forma = JSON.stringify([{'nombre': form.value.nombre},{'paterno':form.value.paterno},{'materno':form.value.materno},
-    //{'sexo':form.value.sexo},{'direccion':form.value.direccion},{'telefono':form.value.telefono},{'correo':form.value.correo},
-    //{'edad':form.value.edad},{'tipo':form.value.tipo},{'seccion':form.value.seccion},{this.files}]);
-    //let forma = JSON.stringify(data);
-    //console.log(forma);
-    //form.append("imagen",this.files);
-    console.log(form);
-    this.ht.setResponsables(JSON.parse(form)).subscribe((resp:any)=>{
-      this.respuesta = resp;
-      console.log(this.respuesta);
-    });
+    this.spin = true;
+    if(this.selectedFiles!=null){
+      const image = new FormData();
+      image.append('nombre',form.value.nombre+" "+form.value.paterno+" "+form.value.materno);
+      image.append('image',this.selectedFiles,this.selectedFiles.name);
+      this.http.post("http://mapinfomich.com/Promovidos/imageResp.php",image).subscribe((respuesta:any)=>{
+        this.respimagen = respuesta;
+        console.log("mandado: "+respuesta);
+      });
+      if(this.respimagen=='error'){
+        this.error = true;
+        this.mensajer = "Hubo un error al momento de subir la imagen. Ya lo estamos revisando...";
+        return
+      }
+    }else{
+      this.respimagen = "no";
+    }
+
+    const fd = new FormData();
+    fd.append('nombre',form.value.nombre);
+    fd.append('paterno',form.value.paterno);
+    fd.append('materno',form.value.materno);
+    fd.append('edad',form.value.edad);
+    fd.append('sexo',form.value.sexo);
+    fd.append('direccion',form.value.direccion);
+    fd.append('telefono',form.value.telefono);
+    fd.append('correo',form.value.correo);
+    fd.append('seccion',form.value.seccion);
+    fd.append('tipo',form.value.tipo);
+    setTimeout(()=>{
+      console.log("respuesta img: "+this.respimagen);
+      if(this.respimagen == "correcto"){
+        fd.append('siimagen',"true");
+        let x = this.selectedFiles.name.split(".");
+        console.log(x);
+        fd.append('ext',x[1]);
+      }else{
+        fd.append('siimagen',"false");
+      }
+      this.http.post("http://mapinfomich.com/Promovidos/setResponsables.php",fd).subscribe((respuesta:any)=>{
+        this.respbd = respuesta;
+      });
+      setTimeout(()=>{
+        if(this.respbd=="incorrecto"){
+          this.error = true;
+          this.mensajer = "Hubo un error al momento de subir la información. Ya lo estamos revisando...";
+        }else{
+          this.success = true;
+          this.mensajes = "Se ha subido correctamente el responsable...";
+        }
+        this.url="../../assets/img/responsables/nousuario.jpg";
+        this.selectedFiles=null;
+        this.spin = false;
+      },500);
+    },2000);
   }
 
 }

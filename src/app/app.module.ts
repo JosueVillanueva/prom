@@ -13,8 +13,8 @@ import { PromoverComponent } from './components/promover/promover.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ResponsablesComponent } from './components/responsables/responsables.component';
 import { AgmCoreModule } from '@agm/core';
-import { Ng2UploaderModule } from 'ng2-uploader';
 import { NewresponsableComponent } from './components/newresponsable/newresponsable.component';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -31,12 +31,12 @@ import { NewresponsableComponent } from './components/newresponsable/newresponsa
   imports: [
     BrowserModule,
     app_routing,
-    Ng2UploaderModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCHrEclbeTPI_e9XHupK7dXxoq9P_apj48'
     }),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

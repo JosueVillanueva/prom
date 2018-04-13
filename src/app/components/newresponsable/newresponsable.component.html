@@ -6,6 +6,18 @@
     <div class="col-sm-12">
         <legend style="color: #ff015d">Agregar Responsable:</legend>
     </div>
+    <div *ngIf="spin==false && success==true" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>!Excelente!</strong>{{mensajes}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="spin==false && error==true" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>!Algo salió mal!</strong>{{mensajer}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div *ngIf="spin==true" class="mx-auto w-100 p-3" style="margin-left: 20%;margin-top: 13%;">
        <div class="loader mx-auto" *ngIf="spin==true"></div>
      </div>
@@ -100,10 +112,7 @@
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05"></label>
-  <input type="file" ngFileSelect
-       [options]="options"
-       (onUpload)="handleUpload($event)"
-       (beforeUpload)="beforeUpload($event)">
+  <input type="file" class="form-control" (change)="readUrl($event)" style="margin-left: 15px;" ngModel name="imagen" #imagen ngModel >
 </div>
 <img [src]="url" id="preview" class="ml-3 img-thumbnail img-fluid" style="width: 23%; height:270px; right: 0px; position: absolute; top:0px;">
 </div>
