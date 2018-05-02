@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
+import { Router } from '@angular/router';
 
 declare var $:any;
 @Component({
@@ -27,11 +28,27 @@ export class NewresponsableComponent implements OnInit {
   respbd:string;
   success:boolean;
   mensajes:string;
-  constructor(public ht:HttpService,public http:HttpClient) {
+  constructor(public ht:HttpService,private route:Router, public http:HttpClient){
+    if(!this.isAuthenticated()){
+      this.route.navigate(['login']);
+    }
+    if(localStorage.getItem('type')=='0'){
+      this.route.navigate(['home']);
+    }
     setTimeout(()=>{
       this.spin = false;
     },1500);
   }
+  public isAuthenticated(): boolean {
+    // Check whether the current time is past the
+    // access token's expiry time
+    if(localStorage.getItem('access_token')){
+       return true;
+     }else{
+       return false;
+     }
+
+   }
   readUrl(event:any) {
   if (event.target.files && event.target.files[0]) {
     var reader = new FileReader();

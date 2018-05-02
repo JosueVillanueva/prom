@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import { Location } from '@angular/common';
 
 declare var $:any;
 @Component({
-  selector: 'app-promover',
-  templateUrl: './promover.component.html'
+  selector: 'app-editprom',
+  templateUrl: './editprom.component.html'
 })
-export class PromoverComponent implements OnInit {
+export class EditpromComponent implements OnInit {
   secciones:any;
   spin:boolean=true;
   seccionales:any = {
     'Municipal': '',
     'Distrital': '',
-    'Seccional': ''
+    'Seccional': '',
+    'Red':''
   };
   resp:string;
   error:boolean;
@@ -23,10 +26,57 @@ export class PromoverComponent implements OnInit {
   errorin:string;
   errorvac:string;
   errorot:string;
-  constructor(public h:HttpService,public http:HttpClient) {
+  ident:string;
+  prom:any= {
+    'nombre': '',
+    'paterno': '',
+    'materno': ''
+  };
+  constructor(public h:HttpService,public http:HttpClient,active:ActivatedRoute,private location: Location) {
+    this.prom[0] = {
+      'nombre': '',
+      'paterno':'',
+      'materno':'',
+      'calle':'',
+      'exterior':'',
+      'interior':'',
+      'colonia':'',
+      'celular':'',
+      'correo':'',
+      'edad':'',
+      'elector':'',
+      'face':'',
+      'fecha_mod':'',
+      'fechan_ins':'',
+      'nac':'',
+      'observaciones':'',
+      'origen':'',
+      'respdis':'',
+      'respmun':'',
+      'respred':'',
+      'respsec':'',
+      'seccion':'',
+      'sexo':'',
+      'telefono':'',
+      'twit':''
+    }
     setTimeout(()=>{
     this.h.getsecciones().subscribe((resp:any)=>{
       this.secciones = resp;
+    });
+    active.params.subscribe((params:any)=>{
+      this.ident = params['id'];
+    });
+    this.h.getpromovidos(this.ident,"editar").subscribe((resp:any)=>{
+      console.log(resp);
+      this.seccionales = {
+        'Municipal':resp[0].respmun,
+        'Seccional':resp[0].respsec,
+        'Distrital': resp[0].respdis,
+        'Red':resp[0].respred
+      }
+      console.log(this.seccionales);
+      this.prom = resp;
     });
       this.spin = false;
     },1500);
@@ -254,7 +304,7 @@ export class PromoverComponent implements OnInit {
     fd.append('ext',form.value.exterior);
     fd.append('colonia',form.value.colonia);
     fd.append('edad',form.value.edad);
-    fd.append('ocupacion',"");
+    fd.append('ocupacion',form.value.ocupacion);
     fd.append('nac',form.value.nac);
     fd.append('seccion',form.value.seccion);
     fd.append('tel',form.value.telefono);
@@ -271,8 +321,9 @@ export class PromoverComponent implements OnInit {
     fd.append('fecha',fechita);
     fd.append('origen',form.value.origen);
     fd.append('observaciones',form.value.observaciones);
+    fd.append('id',this.ident);
     setTimeout(()=>{
-      this.http.post("http://mapinfomich.com/Promovidos/setPromovido.php",fd).subscribe((respuesta:any)=>{
+      this.http.post("http://mapinfomich.com/Promovidos/setEditPromovido.php",fd).subscribe((respuesta:any)=>{
         this.resp = respuesta;
         console.log(respuesta);
       });
@@ -282,9 +333,10 @@ export class PromoverComponent implements OnInit {
           this.mensajer = "Hubo un error al momento de subir la información. Ya lo estamos revisando...";
         }else{
           this.success = true;
-          this.mensajes = "Se ha subido correctamente el promovido...";
+          this.mensajes = "Se editado correctamente el promovido...";
         }
         this.spin = false;
+        location.reload();
       },500);
     },2000);
   }

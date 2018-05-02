@@ -3,7 +3,7 @@
   <div class="container animated fadeIn">
 	<div class="row">
     <div class="col-sm-12">
-        <legend style="color: #ff015d">Agregar promovido:</legend>
+        <legend style="color: #ff015d">Editar promovido:</legend>
     </div>
     <div *ngIf="spin==false && success==true" class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>!Excelente!</strong>{{mensajes}}
@@ -24,7 +24,7 @@
 <div  class="form-row">
 <div class="col-md-3 mb-3">
   <label>Nombre(s)</label>
-  <input type="text" class="form-control" autocomplete="off" (focus)="cambiarf(nombre)" [ngClass]="{invalid:errorin == 'nombre'}" placeholder="Ingrese nombre(s)" id="nombre" #nombre name="nombre" ngModel required>
+  <input type="text" class="form-control" [(ngModel)]="prom[0].nombre" autocomplete="off" (focus)="cambiarf(nombre)" [ngClass]="{invalid:errorin == 'nombre'}" placeholder="Ingrese nombre(s)" id="nombre" #nombre name="nombre" ngModel required>
   <div [ngClass]="{show:errorvac == 'nombre'}" id="errnombre" class="invalid-feedback">
     El nombre no puede estar vacio.
   </div>
@@ -34,7 +34,7 @@
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom02">Apellido paterno</label>
-  <input type="text" class="form-control" id="validationCustom02" (focus)="cambiarf(paterno)" [ngClass]="{invalid:errorin == 'paterno'}" id="paterno" #paterno name="paterno" ngModel placeholder="Ingrese apellido paterno" required>
+  <input type="text" class="form-control" id="validationCustom02" [(ngModel)]="prom[0].paterno" (focus)="cambiarf(paterno)" [ngClass]="{invalid:errorin == 'paterno'}" id="paterno" #paterno name="paterno" ngModel placeholder="Ingrese apellido paterno" required>
   <div [ngClass]="{show:errorvac == 'paterno'}" id="errpaterno" class="invalid-feedback">
     El apellido paterno no puede estar vacio.
   </div>
@@ -45,7 +45,7 @@
 <div class="col-md-3 mb-3">
   <label for="validationCustomUsername">Apellido materno</label>
   <div class="input-group">
-    <input type="text" class="form-control" id="materno" (focus)="cambiarf(materno)" #materno name="materno" [ngClass]="{invalid:errorin == 'materno'}" ngModel placeholder="Ingrese apellido materno" aria-describedby="inputGroupPrepend" required>
+    <input type="text" class="form-control" id="materno" [(ngModel)]="prom[0].materno" (focus)="cambiarf(materno)" #materno name="materno" [ngClass]="{invalid:errorin == 'materno'}" ngModel placeholder="Ingrese apellido materno" aria-describedby="inputGroupPrepend" required>
     <div [ngClass]="{show:errorvac == 'materno'}" id="errmaterno" class="invalid-feedback">
       El apellido materno no puede estar vacio.
     </div>
@@ -57,7 +57,7 @@
 <div class="col-md-3 mb-3">
   <label for="validationCustomUsername">Sexo</label>
   <div class="input-group">
-    <select class="form-control" id="sexo" (focus)="cambiarf(sexo)" #sexo name="sexo" [ngClass]="{invalid:errorin == 'sexo'}" ngModel aria-describedby="inputGroupPrepend" required>
+    <select class="form-control" id="sexo" (focus)="cambiarf(sexo)" [(ngModel)]="prom[0].sexo" #sexo name="sexo" [ngClass]="{invalid:errorin == 'sexo'}" ngModel aria-describedby="inputGroupPrepend" required>
       <option value="0">Seleccione sexo</option>
       <option value="Hombre">Masculino</option>
       <option value="Mujer">Femenino</option>
@@ -71,7 +71,7 @@
 <div class="form-row">
 <div class="col-md-4 mb-3">
   <label for="validationCustom03">Calle</label>
-  <input type="text" class="form-control" id="calle" (focus)="cambiarf(calle)" [ngClass]="{invalid:errorin == 'calle'}" #calle name="calle" ngModel placeholder="Ingrese calle" name="calle" required>
+  <input type="text" class="form-control" id="calle" [(ngModel)]="prom[0].calle" (focus)="cambiarf(calle)" [ngClass]="{invalid:errorin == 'calle'}" #calle name="calle" ngModel placeholder="Ingrese calle" name="calle" required>
   <div [ngClass]="{show:errorvac == 'calle'}" id="errcalle" class="invalid-feedback">
     La calle no puede estar vacio.
   </div>
@@ -81,14 +81,14 @@
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom04">N° Interior</label>
-  <input type="text" class="form-control" id="interior" (focus)="cambiarf(interior)" [ngClass]="{invalid:errorin == 'interior'}" maxlength="5" #interior name="interior" ngModel placeholder="Int" name="interior" required>
+  <input type="text" class="form-control" id="interior" [(ngModel)]="prom[0].interior" (focus)="cambiarf(interior)" [ngClass]="{invalid:errorin == 'interior'}" maxlength="5" #interior name="interior" ngModel placeholder="Int" name="interior" required>
   <div [ngClass]="{show:errorot == 'interior'}" id="errinteriorot" class="invalid-feedback">
     Debes de ingresar un número.
   </div>
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom05">N° Exterior</label>
-  <input type="text" class="form-control" id="exterior" (focus)="cambiarf(exterior)" [ngClass]="{invalid:errorin == 'exterior'}" #exterior maxlength="5" name="exterior" ngModel placeholder="Ext" name="exterior" required>
+  <input type="text" class="form-control" id="exterior" [(ngModel)]="prom[0].exterior" (focus)="cambiarf(exterior)" [ngClass]="{invalid:errorin == 'exterior'}" #exterior maxlength="5" name="exterior" ngModel placeholder="Ext" name="exterior" required>
   <div [ngClass]="{show:errorvac == 'exterior'}" id="errexterior" class="invalid-feedback">
     El número exterior no puede estar vacio.
   </div>
@@ -98,7 +98,7 @@
 </div>
 <div class="col-md-6 mb-3">
   <label for="validationCustom05">Colonia</label>
-  <input type="text" class="form-control" id="colonia"  (focus)="cambiarf(colonia)" [ngClass]="{invalid:errorin == 'colonia'}" #colonia name="colonia" ngModel placeholder="Ingrese colonia" name="colonia" required>
+  <input type="text" class="form-control" id="colonia" [(ngModel)]="prom[0].colonia" (focus)="cambiarf(colonia)" [ngClass]="{invalid:errorin == 'colonia'}" #colonia name="colonia" ngModel placeholder="Ingrese colonia" name="colonia" required>
   <div [ngClass]="{show:errorvac == 'colonia'}" id="errcolonia" class="invalid-feedback">
     La colonia no puede estar vacio.
   </div>
@@ -108,7 +108,7 @@
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom05">Edad</label>
-  <input type="text" class="form-control" id="edad" (focus)="cambiarf(edad)" [ngClass]="{invalid:errorin == 'edad'}" #edad name="edad" ngModel placeholder="Edad" name="edad" required>
+  <input type="text" class="form-control" id="edad" [(ngModel)]="prom[0].edad" (focus)="cambiarf(edad)" [ngClass]="{invalid:errorin == 'edad'}" #edad name="edad" ngModel placeholder="Edad" name="edad" required>
   <div [ngClass]="{show:errorvac == 'edad'}" id="erredad" class="invalid-feedback">
     La edad no puede estar vacio.
   </div>
@@ -117,15 +117,22 @@
   </div>
 </div>
 <div class="col-md-3 mb-3">
+  <label for="validationCustom05">Ocupación</label>
+  <input type="text" class="form-control" id="validationCustom05" [(ngModel)]="prom[0].elector" #ocupacion name="ocupacion" ngModel placeholder="Ocupación" required>
+  <div class="invalid-feedback">
+    Please provide a valid zip.
+  </div>
+</div>
+<div class="col-md-3 mb-3">
   <label for="validationCustom05">Fecha Nacimiento</label>
-  <input type="date" class="form-control" id="validationCustom05" #nac name="nac" ngModel required>
+  <input type="date" class="form-control" id="validationCustom05" [(ngModel)]="prom[0].nac" #nac name="nac" ngModel required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Sección</label>
-  <select class="form-control" id="seccion" (focus)="cambiarf(seccion)" [ngClass]="{invalid:errorin == 'seccion'}" (change)="elegirR(seccion.value)" #seccion name="seccion" ngModel aria-describedby="inputGroupPrepend" required>
+  <select class="form-control" id="seccion" (focus)="cambiarf(seccion)" [(ngModel)]="prom[0].seccion" [ngClass]="{invalid:errorin == 'seccion'}" (change)="elegirR(seccion.value)" #seccion name="seccion" ngModel aria-describedby="inputGroupPrepend" required>
     <option value="0">Seleccione sección</option>
     <option *ngFor="let seccion of secciones" value="{{seccion.seccion}}">{{seccion.seccion}}</option>
   </select>
@@ -135,35 +142,35 @@
 </div>
 <div class="col-md-2 mb-3">
   <label for="validationCustom05">Teléfono</label>
-  <input type="text" class="form-control" id="telefono" (focus)="cambiarf(telefono)" [ngClass]="{invalid:errorin == 'telefono'}" #telefono name="telefono" ngModel placeholder="10 digitos" maxlength="10" required>
+  <input type="text" class="form-control" id="telefono" [(ngModel)]="prom[0].telefono" (focus)="cambiarf(telefono)" [ngClass]="{invalid:errorin == 'telefono'}" #telefono name="telefono" ngModel placeholder="10 digitos" maxlength="10" required>
   <div [ngClass]="{show:errorot == 'telefono'}" id="errtelefonoot" class="invalid-feedback">
     Debes de ingresar un número.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Celular</label>
-  <input type="text" class="form-control" id="celular" (focus)="cambiarf(celular)" [ngClass]="{invalid:errorin == 'celular'}" #celular name="celular" ngModel placeholder="10 digitos" maxlength="10"  required>
+  <input type="text" class="form-control" id="celular" [(ngModel)]="prom[0].celular" (focus)="cambiarf(celular)" [ngClass]="{invalid:errorin == 'celular'}" #celular name="celular" ngModel placeholder="10 digitos" maxlength="10"  required>
   <div [ngClass]="{show:errorot == 'celular'}" id="errcelularot" class="invalid-feedback">
     Debes de ingresar un número.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Correo</label>
-  <input type="email" class="form-control" id="correo" (focus)="cambiarf(correo)" [ngClass]="{invalid:errorin == 'correo'}" #correo name="correo" ngModel placeholder="Ingrese correo"  required>
+  <input type="email" class="form-control" id="correo" [(ngModel)]="prom[0].correo" (focus)="cambiarf(correo)" [ngClass]="{invalid:errorin == 'correo'}" #correo name="correo" ngModel placeholder="Ingrese correo"  required>
   <div [ngClass]="{show:errorot == 'correo'}" id="errcorreoot" class="invalid-feedback">
     Debes de ingresar un correo valido.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Facebook</label>
-  <input type="text" class="form-control" id="validationCustom05" #face name="face" ngModel placeholder="Ingrese facebook"  required>
+  <input type="text" class="form-control" id="validationCustom05" [(ngModel)]="prom[0].face" #face name="face" ngModel placeholder="Ingrese facebook"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Twitter</label>
-  <input type="text" class="form-control" id="validationCustom05" #twit name="twit" ngModel placeholder="Ingrese twitter" required>
+  <input type="text" class="form-control" id="validationCustom05" [(ngModel)]="prom[0].twit" #twit name="twit" ngModel placeholder="Ingrese twitter" required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
@@ -200,7 +207,7 @@
 </div>
 <div class="col-md-4 mb-3">
   <label for="validationCustom05">Responsable de Red</label>
-  <input type="text" class="form-control" class="form-control" id="red" (focus)="cambiarf(red)" [ngClass]="{invalid:errorin == 'red'}" #respred name="respred" ngModel placeholder="Responsable de red"  required>
+  <input type="text" class="form-control" class="form-control" id="red" (focus)="cambiarf(red)" [ngClass]="{invalid:errorin == 'red'}" #respred name="respred"  [(ngModel)]="seccionales.Red" ngModel placeholder="Responsable de red"  required>
   <div [ngClass]="{show:errorvac == 'red'}" id="errred" class="invalid-feedback">
     El responsable de red no puede estar vacio.
   </div>
@@ -210,7 +217,7 @@
 </div>
 <div class="col-md-4 mb-3">
   <label for="validationCustom05">Origen de información</label>
-  <select class="form-control" id="validationCustomUsername" #origen name="origen" ngModel aria-describedby="inputGroupPrepend" required>
+  <select class="form-control" id="validationCustomUsername" [(ngModel)]="prom[0].origen" #origen name="origen" ngModel aria-describedby="inputGroupPrepend" required>
     <option value="0">Seleccione sexo</option>
   </select>
   <div class="invalid-feedback">
@@ -219,11 +226,11 @@
 </div>
 <div class="col-md-12 mb-3">
   <label for="validationCustom05">Observaciones</label>
-  <textarea class="form-control textprom" placeholder="Observaciones" #observaciones name="observaciones" ngModel></textarea>
+  <textarea class="form-control textprom" placeholder="Observaciones" [(ngModel)]="prom[0].observaciones" #observaciones name="observaciones" ngModel></textarea>
 </div>
 </div>
 
-<button class="btn btn-primary" style="background-color: #ff015d; border-color: #ff015d; float: right;" type="submit">Registrar</button>
+<button class="btn btn-primary" style="background-color: #ff015d; border-color: #ff015d; float: right;" type="submit">Editar</button>
 </form>
 
 <script>

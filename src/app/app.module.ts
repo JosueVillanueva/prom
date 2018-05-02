@@ -15,6 +15,10 @@ import { ResponsablesComponent } from './components/responsables/responsables.co
 import { AgmCoreModule } from '@agm/core';
 import { NewresponsableComponent } from './components/newresponsable/newresponsable.component';
 import { ChartModule } from 'angular-highcharts';
+import { EditpromComponent } from './components/editprom/editprom.component';
+import {PasswordPipe} from './pipes/password.pipe';
+import {ChangePipe} from './pipes/change.pipe';
+import { ImprimirComponent } from './components/imprimir/imprimir.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { ChartModule } from 'angular-highcharts';
     PromoverComponent,
     UsuariosComponent,
     ResponsablesComponent,
-    NewresponsableComponent
+    NewresponsableComponent,
+    EditpromComponent,
+    PasswordPipe,
+    ChangePipe,
+    ImprimirComponent
   ],
   imports: [
     BrowserModule,

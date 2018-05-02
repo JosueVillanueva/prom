@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../../services/http.service';
+import { Router } from '@angular/router';
 declare var $:any;
 @Component({
   selector: 'app-responsables',
@@ -23,7 +24,14 @@ export class ResponsablesComponent implements OnInit {
   errormapa:boolean;
   lat:string;
   lng:string;
-  constructor(public http:HttpService){
+  priv:string;
+  constructor(public http:HttpService,private route:Router){
+    if(!this.isAuthenticated()){
+      this.route.navigate(['login']);
+    }
+    if(localStorage.getItem('type')=='0'){
+      this.route.navigate(['home']);
+    }
     setTimeout(()=>{
       this.http.getresponsables("todos").subscribe((resp:any)=>{
         this.responsables = resp;
@@ -32,6 +40,16 @@ export class ResponsablesComponent implements OnInit {
       this.spin = false;
     },1500);
   }
+  public isAuthenticated(): boolean {
+    // Check whether the current time is past the
+    // access token's expiry time
+    if(localStorage.getItem('access_token')){
+       return true;
+     }else{
+       return false;
+     }
+
+   }
   setinfo(todo:any){
     this.direccion=todo.direccion;
     this.sexo=todo.sexo;
@@ -39,7 +57,7 @@ export class ResponsablesComponent implements OnInit {
     this.telefono=todo.telefono;
     this.email=todo.email;
     this.seccion=todo.seccion;
-    this.tipo=todo.ocupacion;
+    this.tipo=todo.tipo;
     this.imagen=todo.imagen;
   }
   showmodal(name:string,todo:any){

@@ -1,0 +1,36 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="container animated fadeIn ">
+	   <div class="row">
+       <div class="col-sm-12">
+           <legend style="color: #ff015d">Imprimir:</legend>
+       </div>
+       <div *ngIf="spin==true" class="mx-auto w-100 p-3" style="margin-left: 20%;margin-top: 13%;">
+          <div class="loader mx-auto" *ngIf="spin==true"></div>
+        </div>
+        <div class="col-sm-12">
+          <form *ngIf="spin==false" (ngSubmit)="imprimir(forma)" #forma="ngForm" class="needs-validation col-sm-12" novalidate>
+      <div  class="form-row">
+        <div class="col-md-3 mb-3">
+          <label for="validationCustom05">Sección</label>
+          <select class="form-control" id="seccion" #seccion name="seccion" ngModel aria-describedby="inputGroupPrepend" required>
+            <option value="0">Seleccione sección</option>
+            <option *ngFor="let seccion of secciones" value="{{seccion.seccion}}">{{seccion.seccion}}</option>
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="validationCustom05">Responsable</label>
+          <select class="form-control" id="responsable" #responsable name="responsable" ngModel aria-describedby="inputGroupPrepend" required>
+            <option value="0">Seleccione responsable</option>
+            <option *ngFor="let responsable of responsables" value="{{responsable.nombre + ' ' + responsable.paterno + ' ' + responsable.materno}}">{{responsable.nombre + " " + responsable.paterno + " " + responsable.materno}}</option>
+            <option *ngFor="let redes of red" value="{{redes.respred}}">{{redes.respred}}</option>
+          </select>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" style="background-color: #ff015d; border-color: #ff015d; float: right;" type="submit">Imprimir</button>
+    </form>
+        </div>
+      </div>
+    </div>
+</div>

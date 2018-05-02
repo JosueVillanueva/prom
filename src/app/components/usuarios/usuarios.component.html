@@ -1,4 +1,81 @@
-<div class="animated fadeIn">
+<div>
   <app-navbar></app-navbar>
-  <img src="../assets/img/logo-Daniela.png" class="homelogo img-thumbnail rounded mx-auto d-block img-fluid" alt="Daniela de los Santos">
+  <div class="container animated fadeIn min600">
+	   <div class="row">
+       <div class="col-sm-12">
+           <legend style="color: #ff015d">Usuarios:</legend>
+       </div>
+       <div *ngIf="spin==false && error==true" class="alert alert-danger alert-dismissible fade show" role="alert">
+         <strong>!Algo salió mal!</strong>{{mensajer}}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div *ngIf="spin==true" class="mx-auto w-100 p-3" style="margin-left: 20%;margin-top: 13%;">
+          <div class="loader mx-auto" *ngIf="spin==true"></div>
+        </div>
+        <button *ngIf="spin==false" class="btn btn-primary agregarb" (click)="agregar();">Agregar</button>
+        <div class="card col-sm-12 min550" style="border-color: #FF015d; padding: 0px; margin-top: 0%;" *ngIf="responsables!=0 && spin==false">
+          <table id="tablauser" class="table" style="margin-bottom: 0px;">
+            <thead style="background-color: #ff015d; color: white;">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Password</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Avanzado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="font16" *ngFor="let responsable of responsables | slice: (curPage * pageSize) - pageSize :curPage * pageSize;let i=index">
+                <th scope="row">{{i+1}}</th>
+                <td><a>{{responsable.Nombre}}</a></td>
+                <td>{{ responsable.Usuario }}</td>
+                <td>{{ responsable.Password | password:priv }}</td>
+                <td>{{ responsable.Privilegios | change }}</td>
+                <td class="text-center"><a class="icon-pencil cursorsito margr10" style="color: #000;" [routerLink]="['/editprom',responsable.id]"></a><a class="icon-bin cursorsito margr10" (click)="eliminar(responsable.id)"></a></td>
+              </tr>
+              <tr class="font16" *ngIf="otro == true">
+                <form style="width: 1138px;" (ngSubmit)='guardar(forma)' #forma='ngForm'>
+                  <td>#</td>
+                  <td><input style="width: 300px;" type='text' placeholder='Nombre' id='nombre' class='form-control' #nombre name='nombre' ngModel></td>
+                  <td><input type='text' placeholder='Usuario' id='usuario' class='form-control' #usuario name='usuario' ngModel></td>
+                  <td><input type='text' placeholder='Contraseña' id='pass' class='form-control' #pass name='pass' ngModel></td>
+                  <td>
+                    <select id='tipo' class='form-control' #tipo name='tipo' ngModel>
+                      <option value='1'>Super Usuario</option>
+                      <option value='2'>Administrador</option>
+                      <option value='0'>Capturista</option>
+                    </select>
+                  </td>
+                  <td><a class='icon-cross cursorsito margr10' style='color: #000;' (click)='cancelar()'></a><button class='icon-checkmark cursorsito margr10' style='border: none; background: none; font-size: 20px;' type="submit"></button></td>
+                </form>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col align-self-start">
+    </div>
+        <nav aria-label="Page navigation example col align-self-center" *ngIf="responsables!=0 && spin == false">
+          <ul class="pagination justify-content-center main-c">
+            <li class="page-item" [ngClass]="{disabled:curPage === 1}">
+              <a class="page-link" aria-label="Previous" (click)="curPage = curPage - 1">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item" *ngFor="let p of pages" (click)="curPage=p" [ngClass]="{active:curPage === p}"><a class="page-link">{{p}}</a></li>
+            <li class="page-item" [ngClass]="{disabled:curPage >= responsables.length/pageSize}">
+              <a class="page-link" aria-label="Next" (click)="curPage = curPage + 1">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="col align-self-end">
+   </div>
+      </div>
+</div>
 </div>

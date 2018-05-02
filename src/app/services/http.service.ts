@@ -23,10 +23,23 @@ export class HttpService {
       return respuesta;
     });
   }
-  getpromovidos(cual:string){
-    return this.http.get("http://mapinfomich.com/Promovidos/getPromovidos.php?cual="+cual).map((respuesta:any)=>{
+  getrespred(cual:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/getResponsablesRed.php?cual="+cual).map((respuesta:any)=>{
       return respuesta;
     });
+  }
+  getpromovidos(cual:string,otro:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/getPromovidos.php?cual="+cual+"&otro="+otro).map((respuesta:any)=>{
+      return respuesta;
+    });
+  }
+  getusuarios(cual:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/getUsuarios.php?cual="+cual).map((respuesta:any)=>{
+      return respuesta;
+    });
+  }
+  eliminaruser(id:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/eliminarUser.php?id="+id).map((respuesta:any)=>{return respuesta});
   }
   setResponsables(form:any){
     console.log("el form "+form.imagen);
@@ -38,6 +51,11 @@ export class HttpService {
       return respuesta;
     });
   }
+  getEstadisticas(){
+    return this.http.get("http://mapinfomich.com/Promovidos/getEstadisticas.php").map((respuesta:any)=>{
+      return respuesta;
+    });
+  }
   getrespProm(cual:string){
     return this.http.get("http://mapinfomich.com/Promovidos/getRespProm.php?cual="+cual).map((respuesta:any)=>{
       return respuesta;
@@ -45,5 +63,8 @@ export class HttpService {
   }
   getCoord(calle:string,mun:string){
     return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD9nZzYt7v6D-LqdTflCQ9PUb9S9z7HkOQ&address="+calle+" "+mun, ).map((respuesta:any)=>{return respuesta});
+  }
+  eliminarprom(id:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/eliminarProm.php?id="+id).map((respuesta:any)=>{return respuesta});
   }
 }

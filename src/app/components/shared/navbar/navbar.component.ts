@@ -5,8 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
-
-  constructor() { }
+  value:string;
+  constructor() {
+    this.value=localStorage.getItem('type');
+ }
 
   ngOnInit() {
   }

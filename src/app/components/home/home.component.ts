@@ -9,6 +9,7 @@ export class HomeComponent implements OnInit {
 
   username:string;
   privileges:string;
+  id:string;
   constructor(private route:Router) {
     if(!this.isAuthenticated()){
       this.route.navigate(['login']);
@@ -23,8 +24,11 @@ export class HomeComponent implements OnInit {
    token = token + Math.random().toString(36).substr(2);
    this.privileges = user.Privilegios;
    this.username = user.Usuario;
+   this.id = user.id;
    localStorage.setItem('access_token', token);
    localStorage.setItem('username', user.Usuario);
+   localStorage.setItem('id', user.id);
+   localStorage.setItem('type', user.Privilegios);
  }
 
  public isAuthenticated(): boolean {

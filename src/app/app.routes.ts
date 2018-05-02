@@ -7,6 +7,8 @@ import {PromovidosComponent} from './components/promovidos/promovidos.component'
 import {UsuariosComponent} from './components/usuarios/usuarios.component';
 import {ResponsablesComponent} from './components/responsables/responsables.component';
 import {NewresponsableComponent} from './components/newresponsable/newresponsable.component';
+import {EditpromComponent} from './components/editprom/editprom.component';
+import {ImprimirComponent} from './components/imprimir/imprimir.component';
 
 const APP_ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +18,8 @@ const APP_ROUTES: Routes = [
   { path: 'responsables', component: ResponsablesComponent },
   { path: 'login', component: LoginComponent },
   { path: 'agregarresp', component: NewresponsableComponent },
+  { path: 'editprom/:id', component: EditpromComponent },
+  { path: 'imprimir', component: ImprimirComponent },
   { path:'**', pathMatch:'full', redirectTo:'home'}
 ];
 

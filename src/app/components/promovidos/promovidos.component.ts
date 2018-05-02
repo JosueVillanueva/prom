@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {ChartModule,Chart} from 'angular-highcharts';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 declare var $:any;
 @Component({
   selector: 'app-promovidos',
@@ -30,6 +32,7 @@ export class PromovidosComponent implements OnInit {
   errormapa:boolean;
   lat:string;
   lng:string;
+  priv:string;
   m:any=[{
     'name': '',
     'y': '',
@@ -40,14 +43,14 @@ export class PromovidosComponent implements OnInit {
             type: 'column'
         },
         title: {
-            text: 'Tabla de resultados de acuerdo a la prioridad'
+            text: 'Hombres y mujeres promovidos en Morelia'
         },
         xAxis: {
             type: 'category'
         },
         yAxis: {
             title: {
-                text: 'Total de demandas recibidas'
+                text: 'Total de Hombres/Mujeres'
             }
         },
         legend: {
@@ -57,33 +60,81 @@ export class PromovidosComponent implements OnInit {
             series: {
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    format: '{y}'
                 }
             }
         },
 
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> del total<br/>'
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> del total<br/>'
         },
 
         series: [{
         }],
   });
-  constructor(public http:HttpService){
-    this.http.getpromovidos("todos").subscribe((resp:any)=>{
-      this.responsables = resp;
-      this.m = resp;
-      this.pages=this.numberOfPages();
-    });
-    setTimeout(()=>{
-      let i;
-      console.log(this.m.length);
-      for(i=0;i<this.m.length;i=i+1){
-        this.chart.addSerie({name:'Promovidos',data:[{name:this.m[i].nombre,y:parseInt(this.m[i].seccion)}]},true,true);
-      }
-      this.spin = false;
-    },3000);
+  chartpie = new Chart({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Promovidos por edades'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                style: {
+                    color: ''
+                }
+            }
+        }
+    },
+    series: []
+  });
+  usuariopequeno:string;
+  constructor(public http:HttpService, private r:Router,private location: Location){
+    this.priv = localStorage.getItem('type');
+    this.usuariopequeno = localStorage.getItem('username');
+    if(this.priv=="0"){
+      this.http.getpromovidos(localStorage.getItem('id'),"noeditar").subscribe((resp:any)=>{
+        this.responsables = resp;
+        this.pages=this.numberOfPages();
+      });
+      setTimeout(()=>{
+        this.spin = false;
+      },3000);
+    }else{
+      this.http.getpromovidos("todos","noeditar").subscribe((resp:any)=>{
+        this.responsables = resp;
+        this.pages=this.numberOfPages();
+      });
+      this.http.getEstadisticas().subscribe((resp:any)=>{
+        this.m = resp;
+      });
+      setTimeout(()=>{
+        let i;
+        console.log(this.m);
+        for(i=0;i<this.m.barras.length;i=i+1){
+          this.chart.addSerie({name:'Promovidos',data:[{name:this.m.barras[i].sexo,y:parseInt(this.m.barras[i].total)}]},true,true);
+        }
+        i = 0;
+        if(this.m.pastel.length>0){
+          this.chartpie.addSerie({name:'Promovidos',data:[{name:'[0-20]',y:parseInt(this.m.pastel[i].veinte),sliced: false,selected:false},{name:'[21-25]',y:parseInt(this.m.pastel[i].veinticinco)},{name:'[26-30]',y:parseInt(this.m.pastel[i].treinta)},{name:'[>30]',y:parseInt(this.m.pastel[i].mastreinta)}]});
+
+        }
+        this.spin = false;
+      },3000);
+    }
   }
   setinfo(todo:any){
     this.direccion=todo.calle+" "+todo.exterior+" "+todo.colonia;
@@ -114,6 +165,18 @@ export class PromovidosComponent implements OnInit {
     });
     this.setinfo(todo);
     $('#myModal').modal('show');
+  }
+  eliminar(id:string){
+    const confirmed = window.confirm('¿Seguro que deseas eliminar este promovido?');
+      if (confirmed) {
+        setTimeout(()=>{
+          this.http.eliminarprom(id).subscribe((resp:any)=>{
+            console.log(resp);
+          });
+          location.reload();
+        },1500);
+      }
+
   }
   numberOfPages(){
     let arraysito=[];
