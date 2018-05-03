@@ -30,9 +30,14 @@ export class UsuariosComponent implements OnInit {
   lng:string;
   otro:boolean = false;
   resp:string;
+  respe:string;
   error:boolean;
   mensajer:string;
   priv:string;
+  edit:boolean = false;
+  user:any;
+  spin2:boolean = false;
+  id:string;
   constructor(public http:HttpService,private location: Location,public httpsend:HttpClient,private route:Router){
     if(!this.isAuthenticated()){
       this.route.navigate(['login']);
@@ -57,6 +62,19 @@ export class UsuariosComponent implements OnInit {
      }else{
        return false;
      }
+
+   }
+   editus(id:string){
+     this.spin2 = true;
+     this.http.getusuario(id).subscribe((resp:any)=>{
+       this.user = resp;
+       console.log(this.user);
+       this.id = this.user[0].id;
+     });
+     setTimeout(()=>{
+       this.edit = true;
+       this.spin2 = false;
+     },3000);
 
    }
   setinfo(todo:any){
@@ -102,6 +120,10 @@ export class UsuariosComponent implements OnInit {
   cancelar(){
     this.otro = false;
   }
+  cancelar2(){
+    this.user = null;
+    this.edit = false;
+  }
   guardar(form:any){
     this.spin = true;
     const fd = new FormData();
@@ -117,6 +139,31 @@ export class UsuariosComponent implements OnInit {
       setTimeout(()=>{
         if(this.resp=="correcto"){
           alert("Se ha agregado correctamente!");
+          location.reload();
+        }else{
+          this.error = true;
+          this.mensajer = "Hubo un error al momento de subir la información. Ya lo estamos revisando...";
+        }
+        this.spin = false;
+      },500);
+    },2000);
+  }
+  editar(form:any){
+    this.spin = true;
+    const fd = new FormData();
+    fd.append('nombre',form.value.nombre);
+    fd.append('usuario',form.value.usuario);
+    fd.append('pass',form.value.pass);
+    fd.append('tipo',form.value.tipo);
+    fd.append('id',this.id);
+    setTimeout(()=>{
+      this.httpsend.post("http://mapinfomich.com/Promovidos/setEditUsuarios.php",fd).subscribe((respuesta:any)=>{
+        this.respe = respuesta;
+        console.log(respuesta);
+      });
+      setTimeout(()=>{
+        if(this.respe=="correcto"){
+          alert("Se ha editado correctamente!");
           location.reload();
         }else{
           this.error = true;

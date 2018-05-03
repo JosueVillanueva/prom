@@ -26,6 +26,7 @@ export class ResponsablesComponent implements OnInit {
   lng:string;
   priv:string;
   constructor(public http:HttpService,private route:Router){
+    this.priv = localStorage.getItem('type');
     if(!this.isAuthenticated()){
       this.route.navigate(['login']);
     }
@@ -86,7 +87,17 @@ export class ResponsablesComponent implements OnInit {
     }
     return arraysito;
   }
+  eliminar(id:string){
+    const confirmed = window.confirm('¿Seguro que deseas eliminar este responsable?');
+      if (confirmed) {
+        setTimeout(()=>{
+          this.http.eliminarresp(id).subscribe((resp:any)=>{
+          });
+          location.reload();
+        },2000);
+      }
 
+  }
   ngOnInit() {
   }
 

@@ -18,8 +18,8 @@ export class HttpService {
       return respuesta;
     });
   }
-  getresponsables(cual:string){
-    return this.http.get("http://mapinfomich.com/Promovidos/getResponsables.php?cual="+cual).map((respuesta:any)=>{
+  getresponsables(cual:string,porque:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/getResponsables.php?cual="+cual+"&why="+porque).map((respuesta:any)=>{
       return respuesta;
     });
   }
@@ -38,11 +38,15 @@ export class HttpService {
       return respuesta;
     });
   }
+  getusuario(id:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/getUsuariosN.php?cual="+id).map((respuesta:any)=>{
+      return respuesta;
+    });
+  }
   eliminaruser(id:string){
     return this.http.get("http://mapinfomich.com/Promovidos/eliminarUser.php?id="+id).map((respuesta:any)=>{return respuesta});
   }
   setResponsables(form:any){
-    console.log("el form "+form.imagen);
     let headersito= new HttpHeaders({
       'Content-Type': "image/jpeg",
       'Access-Control-Allow-Origin':'*'
@@ -66,5 +70,8 @@ export class HttpService {
   }
   eliminarprom(id:string){
     return this.http.get("http://mapinfomich.com/Promovidos/eliminarProm.php?id="+id).map((respuesta:any)=>{return respuesta});
+  }
+  eliminarresp(id:string){
+    return this.http.get("http://mapinfomich.com/Promovidos/eliminarResp.php?id="+id).map((respuesta:any)=>{return respuesta});
   }
 }

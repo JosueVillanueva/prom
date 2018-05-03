@@ -19,6 +19,7 @@ import { EditpromComponent } from './components/editprom/editprom.component';
 import {PasswordPipe} from './pipes/password.pipe';
 import {ChangePipe} from './pipes/change.pipe';
 import { ImprimirComponent } from './components/imprimir/imprimir.component';
+import { EditrespComponent } from './components/editresp/editresp.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ImprimirComponent } from './components/imprimir/imprimir.component';
     EditpromComponent,
     PasswordPipe,
     ChangePipe,
-    ImprimirComponent
+    ImprimirComponent,
+    EditrespComponent
   ],
   imports: [
     BrowserModule,

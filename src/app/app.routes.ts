@@ -9,6 +9,7 @@ import {ResponsablesComponent} from './components/responsables/responsables.comp
 import {NewresponsableComponent} from './components/newresponsable/newresponsable.component';
 import {EditpromComponent} from './components/editprom/editprom.component';
 import {ImprimirComponent} from './components/imprimir/imprimir.component';
+import {EditrespComponent} from './components/editresp/editresp.component';
 
 const APP_ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'agregarresp', component: NewresponsableComponent },
   { path: 'editprom/:id', component: EditpromComponent },
+  { path: 'editresp/:id', component: EditrespComponent },
   { path: 'imprimir', component: ImprimirComponent },
   { path:'**', pathMatch:'full', redirectTo:'home'}
 ];

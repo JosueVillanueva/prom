@@ -41,6 +41,9 @@
 	overflow: none;
 	height: 650px;
 }
+#spin2{
+  margin-left: 230%!important;
+}
 legend {
   display: block;
   width: 100%;

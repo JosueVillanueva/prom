@@ -34,7 +34,7 @@
                 <td>{{ responsable.Usuario }}</td>
                 <td>{{ responsable.Password | password:priv }}</td>
                 <td>{{ responsable.Privilegios | change }}</td>
-                <td class="text-center"><a class="icon-pencil cursorsito margr10" style="color: #000;" [routerLink]="['/editprom',responsable.id]"></a><a class="icon-bin cursorsito margr10" (click)="eliminar(responsable.id)"></a></td>
+                <td class="text-center"><a class="icon-pencil cursorsito margr10" style="color: #000;" (click)="editus(responsable.id)"></a><a class="icon-bin cursorsito margr10" (click)="eliminar(responsable.id)"></a></td>
               </tr>
               <tr class="font16" *ngIf="otro == true">
                 <form style="width: 1138px;" (ngSubmit)='guardar(forma)' #forma='ngForm'>
@@ -52,6 +52,25 @@
                   <td><a class='icon-cross cursorsito margr10' style='color: #000;' (click)='cancelar()'></a><button class='icon-checkmark cursorsito margr10' style='border: none; background: none; font-size: 20px;' type="submit"></button></td>
                 </form>
               </tr>
+              <tr class="font16" *ngIf="edit == true && spin2==false">
+                <form style="width: 1138px;" (ngSubmit)='editar(forma)' #forma='ngForm'>
+                  <td>#</td>
+                  <td><input style="width: 300px;" [(ngModel)]="user[0].Nombre" type='text' placeholder='Nombre' id='nombre' class='form-control' #nombre name='nombre' ngModel></td>
+                  <td><input type='text' placeholder='Usuario' [(ngModel)]="user[0].Usuario" id='usuario' class='form-control' #usuario name='usuario' ngModel></td>
+                  <td><input type='text' placeholder='Contraseña' [(ngModel)]="user[0].Password" id='pass' class='form-control' #pass name='pass' ngModel></td>
+                  <td>
+                    <select id='tipo' class='form-control' #tipo [(ngModel)]="user[0].Privilegios" name='tipo' ngModel>
+                      <option value='1'>Super Usuario</option>
+                      <option value='2'>Administrador</option>
+                      <option value='0'>Capturista</option>
+                    </select>
+                  </td>
+                  <td><a class='icon-cross cursorsito margr10' style='color: #000;' (click)='cancelar2()'></a><button class='icon-checkmark cursorsito margr10' style='border: none; background: none; font-size: 20px;' type="submit"></button></td>
+                </form>
+              </tr>
+              <div *ngIf="spin2==true" class="mx-auto w-100 p-3" id="spin2" style="margin-left: 950%!important;margin-top: 13%;">
+                 <div class="loader mx-auto" *ngIf="spin2==true"></div>
+               </div>
             </tbody>
           </table>
         </div>

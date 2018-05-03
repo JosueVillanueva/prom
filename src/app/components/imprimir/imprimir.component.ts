@@ -15,7 +15,7 @@ export class ImprimirComponent implements OnInit {
       this.h.getsecciones().subscribe((resp:any)=>{
         this.secciones = resp;
       });
-      this.h.getresponsables("todos").subscribe((resp:any)=>{
+      this.h.getresponsables("todos","nuevo").subscribe((resp:any)=>{
         this.responsables = resp;
       });
       this.h.getrespred("todos").subscribe((resp:any)=>{
