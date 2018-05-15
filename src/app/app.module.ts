@@ -20,6 +20,7 @@ import {PasswordPipe} from './pipes/password.pipe';
 import {ChangePipe} from './pipes/change.pipe';
 import { ImprimirComponent } from './components/imprimir/imprimir.component';
 import { EditrespComponent } from './components/editresp/editresp.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { EditrespComponent } from './components/editresp/editresp.component';
     }),
     FormsModule,
     HttpClientModule,
-    ChartModule
+    ChartModule,
+    DataTablesModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

@@ -55,9 +55,48 @@ legend {
   border: 0;
   border-bottom: 1px solid #ff015d;
 }
+#tablita_length{
+  display: none;
+}
+#tablita_filter input{
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+#respselect{
+  width: 30%;
+  position: absolute;
+  z-index: 999;
+}
+#tablita_paginate span a{
+  position: relative;
+  background-color: #FF015D !important;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #007bff;
+  border: 1px solid #dee2e6;
+}
+#tablita_paginate{
+  margin-right: 45%;
+}
+.paginate_button .current{
+  background-color: #FF015D;
+}
 label{
   color: #ff015d;
 }
+#tablita_previous,#tablita_next{
+  padding: 0px;
+  margin: 0px;
+}
+
 .loader {
     border: 2px solid #f3f3f3; /* Light grey */
     border-top: 2px solid #ff015d; /* Blue */

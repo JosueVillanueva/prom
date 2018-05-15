@@ -11,8 +11,12 @@
         <div class="card col-sm-12 min550" style="border-color: #FF015d; padding: 0px; margin-top: 0%;" *ngIf="responsables==null && priv=='0' && spin==false">
           <blockquote class="blockquote text-center" style="color: #ff015d;">No se encontraron promovidos hechos por ti.</blockquote>
         </div>
-        <div class="card col-sm-12 min550" style="border-color: #FF015d; padding: 0px; margin-top: 0%;" *ngIf="responsables!=null && spin==false">
-          <table class="table" style="margin-bottom: 0px;">
+        <div class="card col-sm-12 min550" style="border:none; padding: 0px; margin-top: 0%;" *ngIf="responsables!=null && spin==false">
+          <select *ngIf="priv == '1'" (change)="elegirresp(respchange.value)" #respchange name="respchange" ngModel class="form-control" id="respselect">
+              <option *ngFor="let responsable of responsablesdos" value="{{responsable.nombre + ' ' + responsable.paterno + ' ' + responsable.materno}}">{{responsable.nombre + " " + responsable.paterno + " " + responsable.materno}}</option>
+            <option *ngFor="let repo of respred">{{repo.respred}}</option>
+          </select>
+          <table datatable [dtOptions]="dtOptions" class="table" id="tablita" style="border: 1px solid #FF015d; margin-bottom: 0px;">
             <thead style="background-color: #ff015d; color: white;">
               <tr>
                 <th scope="col">#</th>
@@ -37,27 +41,6 @@
             </tbody>
           </table>
         </div>
-        <div class="col align-self-start">
-    </div>
-        <nav aria-label="Page navigation example col align-self-center" *ngIf="responsables!=0 && spin==false">
-          <ul class="pagination justify-content-center main-c">
-            <li class="page-item" [ngClass]="{disabled:curPage === 1}">
-              <a class="page-link" aria-label="Previous" (click)="curPage = curPage - 1">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item" *ngFor="let p of pages" (click)="curPage=p" [ngClass]="{active:curPage === p}"><a class="page-link">{{p}}</a></li>
-            <li class="page-item" [ngClass]="{disabled:curPage >= responsables.length/pageSize}">
-              <a class="page-link" aria-label="Next" (click)="curPage = curPage + 1">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <div class="col align-self-end">
-   </div>
    <div class="col-sm-12 min550" style="padding: 0px; margin-top: 0%; margin-bottom: 20px;" *ngIf="spin==false && (priv=='1'||priv=='2')">
      <iframe class="min550 framesec" border="0" frameborder="0" framespacing="0" src="http://mapinfomich.com/Promovidos/mapademandas.php?id=54" ></iframe>
    </div>

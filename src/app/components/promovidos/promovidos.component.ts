@@ -6,10 +6,10 @@ import { Location } from '@angular/common';
 declare var $:any;
 @Component({
   selector: 'app-promovidos',
-  templateUrl: './promovidos.component.html'
+  templateUrl: './promovidos.component.html',
 })
 export class PromovidosComponent implements OnInit {
-
+  dtOptions: DataTables.Settings = {};
   responsables:any="";
   pages:any[]=[];
   spin:boolean=true;
@@ -101,19 +101,27 @@ export class PromovidosComponent implements OnInit {
     },
     series: []
   });
+  respred:any;
+  responsablesdos:any;
   usuariopequeno:string;
   constructor(public http:HttpService, private r:Router,private location: Location){
     this.priv = localStorage.getItem('type');
     this.usuariopequeno = localStorage.getItem('username');
     if(this.priv=="0"){
       this.http.getpromovidos(localStorage.getItem('id'),"noeditar").subscribe((resp:any)=>{
-        this.responsables = resp;
+        this.responsables = JSON.parse(resp);
         this.pages=this.numberOfPages();
       });
       setTimeout(()=>{
         this.spin = false;
       },3000);
     }else{
+      this.http.getresponsables("todos","nuevo").subscribe((resp:any)=>{
+        this.responsablesdos = resp;
+      });
+      this.http.getrespred("todos").subscribe((resp:any)=>{
+        this.respred = resp;
+      });
       this.http.getpromovidos("todos","noeditar").subscribe((resp:any)=>{
         this.responsables = resp;
         this.pages=this.numberOfPages();
@@ -166,6 +174,12 @@ export class PromovidosComponent implements OnInit {
     this.setinfo(todo);
     $('#myModal').modal('show');
   }
+  elegirresp(cual:string){
+    this.http.getpromovidos(cual,"responsable").subscribe((resp:any)=>{
+      this.responsables = resp;
+      console.log(this.responsables);
+    });
+  }
   eliminar(id:string){
     const confirmed = window.confirm('¿Seguro que deseas eliminar este promovido?');
       if (confirmed) {
@@ -191,6 +205,29 @@ export class PromovidosComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.dtOptions = {
+      language: {
+        "emptyTable": "No hay información",
+        "info": "",
+        "infoEmpty": "",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "<a class='page-link' aria-label='Previous'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Previous</span></a>",
+            "previous": "<a class='page-link' aria-label='Previous'><span aria-hidden='true'>&laquo;</span><span class='sr-only'>Previous</span></a>"
+        }
+    },
+    "pageLength": 10
+    };
   }
 
 }

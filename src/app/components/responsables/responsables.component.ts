@@ -34,7 +34,7 @@ export class ResponsablesComponent implements OnInit {
       this.route.navigate(['home']);
     }
     setTimeout(()=>{
-      this.http.getresponsables("todos").subscribe((resp:any)=>{
+      this.http.getresponsables("todos","todos").subscribe((resp:any)=>{
         this.responsables = resp;
         this.pages=this.numberOfPages();
       });
