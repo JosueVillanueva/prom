@@ -98,7 +98,10 @@
 </div>
 <div class="col-md-6 mb-3">
   <label for="validationCustom05">Colonia</label>
-  <input type="text" class="form-control" id="colonia" [(ngModel)]="prom[0].colonia" (focus)="cambiarf(colonia)" [ngClass]="{invalid:errorin == 'colonia'}" #colonia name="colonia" ngModel placeholder="Ingrese colonia" name="colonia" required>
+  <select class="form-control" id="colonia" (focus)="cambiarf(colonia)" [(ngModel)]="prom[0].colonia" [ngClass]="{invalid:errorin == 'colonia'}" (change)="changesec(colonia.value)" #colonia name="colonia" ngModel aria-describedby="inputGroupPrepend" required>
+    <option value="0">Seleccione sección</option>
+    <option *ngFor="let colonita of colonias" value="{{colonita.CLASIFICACION + ' ' + colonita.COLONIA}}">{{ colonita.COLONIA + " " + colonita.CLASIFICACION }}</option>
+  </select>
   <div [ngClass]="{show:errorvac == 'colonia'}" id="errcolonia" class="invalid-feedback">
     La colonia no puede estar vacio.
   </div>
@@ -117,15 +120,8 @@
   </div>
 </div>
 <div class="col-md-3 mb-3">
-  <label for="validationCustom05">Ocupación</label>
-  <input type="text" class="form-control" id="validationCustom05" [(ngModel)]="prom[0].elector" #ocupacion name="ocupacion" ngModel placeholder="Ocupación" required>
-  <div class="invalid-feedback">
-    Please provide a valid zip.
-  </div>
-</div>
-<div class="col-md-3 mb-3">
   <label for="validationCustom05">Fecha Nacimiento</label>
-  <input type="date" class="form-control" id="validationCustom05" [(ngModel)]="prom[0].nac" #nac name="nac" ngModel required>
+  <input type="date" class="form-control" id="validationCustom05" (change)="calcularedad(nac.value)" [(ngModel)]="prom[0].nac" #nac name="nac" ngModel required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
@@ -216,10 +212,8 @@
   </div>
 </div>
 <div class="col-md-4 mb-3">
-  <label for="validationCustom05">Origen de información</label>
-  <select class="form-control" id="validationCustomUsername" [(ngModel)]="prom[0].origen" #origen name="origen" ngModel aria-describedby="inputGroupPrepend" required>
-    <option value="0">Seleccione sexo</option>
-  </select>
+  <label for="validationCustom05">Origen de Información</label>
+  <input type="text" class="form-control" class="form-control" id="origen" [(ngModel)]="prom[0].origen" (focus)="cambiarf(origen)" [ngClass]="{invalid:errorin == 'origen'}" #origen name="origen" ngModel placeholder="Origen de información"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>

@@ -61,20 +61,24 @@ export class ResponsablesComponent implements OnInit {
     this.tipo=todo.tipo;
     this.imagen=todo.imagen;
   }
-  showmodal(name:string,todo:any){
+  showmodal(id:string,todo:any){
     this.namefind = name;
-    this.http.getCoord(todo.direccion,"Morelia").subscribe((resp:any)=>{
-      console.log(resp.results[0]);
-      if(!resp.results[0]){
-        this.errormapa=true;
-      }else{
-        this.errormapa=false;
-      }
-      this.lat=resp.results[0].geometry.location.lat;
-      this.lng=resp.results[0].geometry.location.lng;
-    });
-    this.setinfo(todo);
-    $('#myModal').modal('show');
+
+      this.http.getCoord(todo.calle+" "+todo.exterior+" "+todo.colonia,"Morelia").subscribe((resp:any)=>{
+        console.log(resp.results[0]);
+        if(!resp.results[0]){
+          this.errormapa=true;
+        }else{
+          this.errormapa=false;
+        }
+        this.lat=resp.results[0].geometry.location.lat;
+        this.lng=resp.results[0].geometry.location.lng;
+      });
+
+    setTimeout(()=>{
+      var opciones="titlebar=no, toolbar=no, location=no,  directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=750, height=520, top=110, left=100";
+      window.open("http://coplase.com.mx/Promovidos/info_resp.php?id="+id+"&lat="+this.lat+"&long="+this.lng,"",opciones);
+    },1000);
   }
   numberOfPages(){
     let arraysito=[];

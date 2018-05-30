@@ -28,15 +28,15 @@ export class ImprimirComponent implements OnInit {
   imprimir(form:any){
     if(form.value.seccion!=""){
       if(form.value.responsable!=""){
-        window.open("http://mapinfomich.com/Promovidos/imprimir.php?seccion="+form.value.seccion+"&responsable="+form.value.responsable);
+        window.open("http://coplase.com.mx/Promovidos/imprimir.php?seccion="+form.value.seccion+"&responsable="+form.value.responsable);
       }else{
-        window.open("http://mapinfomich.com/Promovidos/imprimir.php?seccion="+form.value.seccion);
+        window.open("http://coplase.com.mx/Promovidos/imprimir.php?seccion="+form.value.seccion);
       }
     }else{
       if(form.value.responsable!=""){
-        window.open("http://mapinfomich.com/Promovidos/imprimir.php?responsable="+form.value.responsable);
+        window.open("http://coplase.com.mx/Promovidos/imprimir.php?responsable="+form.value.responsable);
       }else{
-        window.open("http://mapinfomich.com/Promovidos/imprimir.php");
+        window.open("http://coplase.com.mx/Promovidos/imprimir.php");
       }
     }
 

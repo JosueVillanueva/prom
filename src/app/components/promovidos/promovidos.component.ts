@@ -109,12 +109,12 @@ export class PromovidosComponent implements OnInit {
     this.usuariopequeno = localStorage.getItem('username');
     if(this.priv=="0"){
       this.http.getpromovidos(localStorage.getItem('id'),"noeditar").subscribe((resp:any)=>{
-        this.responsables = JSON.parse(resp);
+        this.responsables = resp;
         this.pages=this.numberOfPages();
       });
       setTimeout(()=>{
         this.spin = false;
-      },3000);
+      },5000);
     }else{
       this.http.getresponsables("todos","nuevo").subscribe((resp:any)=>{
         this.responsablesdos = resp;
@@ -141,7 +141,7 @@ export class PromovidosComponent implements OnInit {
 
         }
         this.spin = false;
-      },3000);
+      },5000);
     }
   }
   setinfo(todo:any){
@@ -159,20 +159,24 @@ export class PromovidosComponent implements OnInit {
     this.observaciones=todo.observaciones;
 
   }
-  showmodal(name:string,todo:any){
+  showmodal(id:string,todo:any){
     this.namefind = name;
-    this.http.getCoord(todo.calle+" "+todo.exterior+" "+todo.colonia,"Morelia").subscribe((resp:any)=>{
-      console.log(resp.results[0]);
-      if(!resp.results[0]){
-        this.errormapa=true;
-      }else{
-        this.errormapa=false;
-      }
-      this.lat=resp.results[0].geometry.location.lat;
-      this.lng=resp.results[0].geometry.location.lng;
-    });
-    this.setinfo(todo);
-    $('#myModal').modal('show');
+
+      this.http.getCoord(todo.calle+" "+todo.exterior+" "+todo.colonia,"Morelia").subscribe((resp:any)=>{
+        console.log(resp.results[0]);
+        if(!resp.results[0]){
+          this.errormapa=true;
+        }else{
+          this.errormapa=false;
+        }
+        this.lat=resp.results[0].geometry.location.lat;
+        this.lng=resp.results[0].geometry.location.lng;
+      });
+
+    setTimeout(()=>{
+      var opciones="titlebar=no, toolbar=no, location=no,  directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=750, height=520, top=110, left=100";
+      window.open("http://coplase.com.mx/Promovidos/info_prom.php?id="+id+"&lat="+this.lat+"&long="+this.lng,"",opciones);
+    },1000);
   }
   elegirresp(cual:string){
     this.http.getpromovidos(cual,"responsable").subscribe((resp:any)=>{
@@ -226,7 +230,7 @@ export class PromovidosComponent implements OnInit {
             "previous": "<a class='page-link' aria-label='Previous'><span aria-hidden='true'>&laquo;</span><span class='sr-only'>Previous</span></a>"
         }
     },
-    "pageLength": 10
+    pageLength: 10
     };
   }
 

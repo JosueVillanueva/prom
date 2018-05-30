@@ -132,7 +132,7 @@ export class UsuariosComponent implements OnInit {
     fd.append('pass',form.value.pass);
     fd.append('tipo',form.value.tipo);
     setTimeout(()=>{
-      this.httpsend.post("http://mapinfomich.com/Promovidos/setUsuarios.php",fd).subscribe((respuesta:any)=>{
+      this.httpsend.post("http://coplase.com.mx/Promovidos/setUsuarios.php",fd).subscribe((respuesta:any)=>{
         this.resp = respuesta;
         console.log(respuesta);
       });
@@ -145,8 +145,8 @@ export class UsuariosComponent implements OnInit {
           this.mensajer = "Hubo un error al momento de subir la información. Ya lo estamos revisando...";
         }
         this.spin = false;
-      },500);
-    },2000);
+      },3000);
+    },3500);
   }
   editar(form:any){
     this.spin = true;
@@ -157,11 +157,12 @@ export class UsuariosComponent implements OnInit {
     fd.append('tipo',form.value.tipo);
     fd.append('id',this.id);
     setTimeout(()=>{
-      this.httpsend.post("http://mapinfomich.com/Promovidos/setEditUsuarios.php",fd).subscribe((respuesta:any)=>{
+      this.httpsend.post("http://coplase.com.mx/Promovidos/setEditUsuarios.php",fd).subscribe((respuesta:any)=>{
         this.respe = respuesta;
         console.log(respuesta);
       });
       setTimeout(()=>{
+        console.log(this.respe);
         if(this.respe=="correcto"){
           alert("Se ha editado correctamente!");
           location.reload();
@@ -170,8 +171,8 @@ export class UsuariosComponent implements OnInit {
           this.mensajer = "Hubo un error al momento de subir la información. Ya lo estamos revisando...";
         }
         this.spin = false;
-      },500);
-    },2000);
+      },3000);
+    },3500);
   }
   numberOfPages(){
     let arraysito=[];

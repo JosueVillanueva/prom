@@ -32,6 +32,8 @@ export class EditpromComponent implements OnInit {
     'paterno': '',
     'materno': ''
   };
+  laedad:string="";
+  colonias:string;
   constructor(public h:HttpService,public http:HttpClient,active:ActivatedRoute,private location: Location) {
     this.prom[0] = {
       'nombre': '',
@@ -60,7 +62,9 @@ export class EditpromComponent implements OnInit {
       'telefono':'',
       'twit':''
     }
-    setTimeout(()=>{
+    this.h.getseccionescolonia().subscribe((resp:any)=>{
+      this.colonias = resp;
+    });
     this.h.getsecciones().subscribe((resp:any)=>{
       this.secciones = resp;
     });
@@ -78,15 +82,20 @@ export class EditpromComponent implements OnInit {
       console.log(this.seccionales);
       this.prom = resp;
     });
+    setTimeout(()=>{
+
       this.spin = false;
-    },1500);
+    },3500);
   }
-
-  elegirR(valor:string){
-    this.h.getrespProm(valor).subscribe((respuesta:any)=>{
-      this.seccionales = respuesta;
+  changesec(colonia:string){
+    this.h.getseccionesC(colonia).subscribe((resp:any)=>{
+      this.secciones = resp;
     });
-
+  }
+  elegirR(valor:string){
+    this.h.getColoniaS(valor).subscribe((respuesta:any)=>{
+      this.colonias = respuesta;
+    });
   }
   cambiarf(c:any){
     $("#"+c.name).attr('class','form-control valid ng-touched');
@@ -95,6 +104,17 @@ export class EditpromComponent implements OnInit {
     this.errorin = "";
     this.errorvac = "";
     this.errorot = "";
+  }
+  calcularedad(fecha){
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+    this.prom[0].edad = edad.toString();
   }
   newprom(form:any){
     console.log(form);
@@ -153,12 +173,6 @@ export class EditpromComponent implements OnInit {
       this.spin = false;
       return;
     }
-    if(!expreg.test(valor)){
-      this.errorin = "calle";
-      this.errorot = "calle";
-      this.spin = false;
-      return;
-    }
     valor = $("#interior").val();
     expreg = new RegExp("^[0-9]*$");
     if(!expreg.test(valor)){
@@ -188,12 +202,6 @@ export class EditpromComponent implements OnInit {
       this.spin = false;
       return;
     }
-    if(!expreg.test(valor)){
-      this.errorin = "colonia";
-      this.errorot = "colonia";
-      this.spin = false;
-      return;
-    }
     valor = $("#edad").val();
     expreg = new RegExp("^[0-9]*$");
     if(valor==""){
@@ -208,34 +216,11 @@ export class EditpromComponent implements OnInit {
       this.spin = false;
       return;
     }
-    valor = $("#seccion").val();
-    if(valor=="0" || valor == null){
-      this.errorin = "seccion";
-      this.errorvac = "seccion";
-      this.spin = false;
-      return;
-    }
     valor = $("#telefono").val();
     expreg = new RegExp("^[0-9]*$");
     if(!expreg.test(valor)){
       this.errorin = "telefono";
       this.errorot = "telefono";
-      this.spin = false;
-      return;
-    }
-    valor = $("#celular").val();
-    expreg = new RegExp("^[0-9]*$");
-    if(!expreg.test(valor)){
-      this.errorin = "celular";
-      this.errorot = "celular";
-      this.spin = false;
-      return;
-    }
-    valor = $("#correo").val();
-    expreg = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$");
-    if(!expreg.test(valor)){
-      this.errorin = "correo";
-      this.errorot = "correo";
       this.spin = false;
       return;
     }
@@ -323,7 +308,7 @@ export class EditpromComponent implements OnInit {
     fd.append('observaciones',form.value.observaciones);
     fd.append('id',this.ident);
     setTimeout(()=>{
-      this.http.post("http://mapinfomich.com/Promovidos/setEditPromovido.php",fd).subscribe((respuesta:any)=>{
+      this.http.post("http://coplase.com.mx/Promovidos/setEditPromovido.php",fd).subscribe((respuesta:any)=>{
         this.resp = respuesta;
         console.log(respuesta);
       });
@@ -332,13 +317,12 @@ export class EditpromComponent implements OnInit {
           this.error = true;
           this.mensajer = "Hubo un error al momento de subir la información. Ya lo estamos revisando...";
         }else{
-          this.success = true;
-          this.mensajes = "Se editado correctamente el promovido...";
+          alert("Se editado correctamente el promovido...");
         }
         this.spin = false;
         location.reload();
-      },500);
-    },2000);
+      },3500);
+    },3000);
   }
 
   ngOnInit() {

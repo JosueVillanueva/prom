@@ -12,7 +12,7 @@
       </button>
     </div>
     <div *ngIf="spin==false && error==true" class="alert alert-danger alert-dismissible fade show" role="alert">
-      <strong>!Algo salió mal!</strong>{{mensajer}}
+      <strong>!Algo salió mal!</strong>{{mensajer}}<strong><a class="cursorsito" *ngIf="this.resp[1].length!=0" [routerLink]="['/editprom',resp[1]]"> Editar...</a></strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -24,7 +24,7 @@
 <div  class="form-row">
 <div class="col-md-3 mb-3">
   <label>Nombre(s)</label>
-  <input type="text" class="form-control" autocomplete="off" (focus)="cambiarf(nombre)" [ngClass]="{invalid:errorin == 'nombre'}" placeholder="Ingrese nombre(s)" id="nombre" #nombre name="nombre" ngModel required>
+  <input type="text" class="form-control" (focus)="cambiarf(nombre)" [ngClass]="{invalid:errorin == 'nombre'}" placeholder="Ingrese nombre(s)" id="nombre" #nombre name="nombre" ngModel required>
   <div [ngClass]="{show:errorvac == 'nombre'}" id="errnombre" class="invalid-feedback">
     El nombre no puede estar vacio.
   </div>
@@ -98,7 +98,10 @@
 </div>
 <div class="col-md-6 mb-3">
   <label for="validationCustom05">Colonia</label>
-  <input type="text" class="form-control" id="colonia"  (focus)="cambiarf(colonia)" [ngClass]="{invalid:errorin == 'colonia'}" #colonia name="colonia" ngModel placeholder="Ingrese colonia" name="colonia" required>
+  <select class="form-control" id="colonia" (focus)="cambiarf(colonia)" [ngClass]="{invalid:errorin == 'colonia'}" (change)="changesec(colonia.value)" #colonia name="colonia" ngModel aria-describedby="inputGroupPrepend" required>
+    <option value="0">Seleccione sección</option>
+    <option *ngFor="let colonita of colonias" value="{{colonita.CLASIFICACION + ' ' + colonita.COLONIA}}">{{ colonita.COLONIA + " " + colonita.CLASIFICACION }}</option>
+  </select>
   <div [ngClass]="{show:errorvac == 'colonia'}" id="errcolonia" class="invalid-feedback">
     La colonia no puede estar vacio.
   </div>
@@ -108,7 +111,7 @@
 </div>
 <div class="col-md-1 mb-3">
   <label for="validationCustom05">Edad</label>
-  <input type="text" class="form-control" id="edad" (focus)="cambiarf(edad)" [ngClass]="{invalid:errorin == 'edad'}" #edad name="edad" ngModel placeholder="Edad" name="edad" required>
+  <input type="text" class="form-control" id="edad" (focus)="cambiarf(edad)" [ngClass]="{invalid:errorin == 'edad'}" [(ngModel)]="laedad" #edad name="edad" ngModel placeholder="Edad" name="edad" required>
   <div [ngClass]="{show:errorvac == 'edad'}" id="erredad" class="invalid-feedback">
     La edad no puede estar vacio.
   </div>
@@ -118,7 +121,7 @@
 </div>
 <div class="col-md-3 mb-3">
   <label for="validationCustom05">Fecha Nacimiento</label>
-  <input type="date" class="form-control" id="validationCustom05" #nac name="nac" ngModel required>
+  <input type="date" class="form-control" id="validationCustom05" (change)="calcularedad(nac.value)" #nac name="nac" ngModel required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>
@@ -179,7 +182,7 @@
     </div>
 </div>
 <div class="col-md-4 mb-3">
-  <label for="validationCustom05">Responsable distrital</label>
+  <label for="validationCustom05">Responsable Distrital</label>
   <input type="text" class="form-control" class="form-control" id="distrital" (focus)="cambiarf(distrital)" [ngClass]="{invalid:errorin == 'distrital'}" [(ngModel)]="seccionales.Distrital" #respdis name="respdis" ngModel placeholder="Responsable distrital"  required>
   <div [ngClass]="{show:errorvac == 'distrital'}" id="errdistrital" class="invalid-feedback">
     El responsable distrital no puede estar vacio.
@@ -189,7 +192,7 @@
   </div>
 </div>
 <div class="col-md-4 mb-3">
-  <label for="validationCustom05">Responsable seccional</label>
+  <label for="validationCustom05">Responsable Seccional</label>
   <input type="text" class="form-control" class="form-control" id="seccional" (focus)="cambiarf(seccional)" [ngClass]="{invalid:errorin == 'seccional'}" [(ngModel)]="seccionales.Seccional" #respsec name="respsec" ngModel placeholder="Responsable seccional"  required>
   <div [ngClass]="{show:errorvac == 'seccional'}" id="errseccional" class="invalid-feedback">
     El responsable seccional no puede estar vacio.
@@ -209,10 +212,8 @@
   </div>
 </div>
 <div class="col-md-4 mb-3">
-  <label for="validationCustom05">Origen de información</label>
-  <select class="form-control" id="validationCustomUsername" #origen name="origen" ngModel aria-describedby="inputGroupPrepend" required>
-    <option value="0">Seleccione sexo</option>
-  </select>
+  <label for="validationCustom05">Origen de Información</label>
+  <input type="text" class="form-control" class="form-control" id="origen" (focus)="cambiarf(origen)" [ngClass]="{invalid:errorin == 'origen'}" #origen name="origen" ngModel placeholder="Origen de información"  required>
   <div class="invalid-feedback">
     Please provide a valid zip.
   </div>

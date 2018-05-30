@@ -22,27 +22,27 @@
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Dirección</th>
-                <th scope="col">Teléfono</th>
+                <th scope="col">Celular</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Sección</th>
                 <th scope="col">Avanzado</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="font16" *ngFor="let responsable of responsables | slice: (curPage * pageSize) - pageSize :curPage * pageSize;let i=index">
-                <th scope="row">{{i+1}}</th>
+              <tr class="font16" *ngFor="let responsable of responsables">
+                <th scope="row">{{responsable.id}}</th>
                 <td><a>{{responsable.nombre + " " + responsable.paterno + " " + responsable.materno}}</a></td>
                 <td>{{ responsable.calle }} #{{responsable.exterior}} {{responsable.colonia}}</td>
-                <td>{{ responsable.telefono }}</td>
+                <td>{{ responsable.celular }}</td>
                 <td>{{ responsable.correo }}</td>
                 <td>{{ responsable.seccion }}</td>
-                <td class="text-center"><a class="icon-eye cursorsito margr10" (click)="showmodal(responsable.nombre+' '+responsable.paterno+' '+responsable.materno,responsable);"></a><a class="icon-pencil cursorsito margr10" style="color: #000;" [routerLink]="['/editprom',responsable.id]"></a><a *ngIf="priv=='1'||priv=='2'"class="icon-bin cursorsito margr10" (click)="eliminar(responsable.id)"></a></td>
+                <td class="text-center"><a class="icon-eye cursorsito margr10" (click)="showmodal(responsable.id,responsable);"></a><a class="icon-pencil cursorsito margr10" style="color: #000;" [routerLink]="['/editprom',responsable.id]"></a><a *ngIf="priv=='1'||priv=='2'"class="icon-bin cursorsito margr10" (click)="eliminar(responsable.id)"></a></td>
               </tr>
             </tbody>
           </table>
         </div>
    <div class="col-sm-12 min550" style="padding: 0px; margin-top: 0%; margin-bottom: 20px;" *ngIf="spin==false && (priv=='1'||priv=='2')">
-     <iframe class="min550 framesec" border="0" frameborder="0" framespacing="0" src="http://mapinfomich.com/Promovidos/mapademandas.php?id=54" ></iframe>
+     <iframe class="min550 framesec" border="0" frameborder="0" framespacing="0" src="http://coplase.com.mx/Promovidos/mapademandas.php?id=54" ></iframe>
    </div>
    <div class="col-sm-6 min550" [chart]="chart" style="padding: 0px; margin-top: 0%; margin-bottom: 20px;" *ngIf="spin==false && (priv=='1'||priv=='2')" >
 

@@ -31,10 +31,10 @@ export class LoginComponent{
         setTimeout(()=>{
           this.h.setSession(this.user);
           this.r.navigate(['/home']);
-        },3000);
+        },3500);
       }else{
-        setTimeout(()=>{ this.elerror=true; this.spin=false;}, 3000);
+        setTimeout(()=>{ this.elerror=true; this.spin=false;}, 3500);
       }
-    },2000);
+    },3500);
   }
 }

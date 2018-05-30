@@ -106,7 +106,7 @@ export class EditrespComponent implements OnInit {
       const image = new FormData();
       image.append('nombre',form.value.nombre+" "+form.value.paterno+" "+form.value.materno);
       image.append('image',this.selectedFiles,this.selectedFiles.name);
-      this.http.post("http://mapinfomich.com/Promovidos/imageResp.php",image).subscribe((respuesta:any)=>{
+      this.http.post("http://coplase.com.mx/Promovidos/imageResp.php",image).subscribe((respuesta:any)=>{
         this.respimagen = respuesta;
         console.log("mandado: "+respuesta);
       });
@@ -141,7 +141,7 @@ export class EditrespComponent implements OnInit {
       }else{
         fd.append('siimagen',"false");
       }
-      this.http.post("http://mapinfomich.com/Promovidos/setEditResponsables.php",fd).subscribe((respuesta:any)=>{
+      this.http.post("http://coplase.com.mx/Promovidos/setEditResponsables.php",fd).subscribe((respuesta:any)=>{
         this.respbd = respuesta;
       });
       setTimeout(()=>{

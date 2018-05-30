@@ -23,18 +23,38 @@ export class PromoverComponent implements OnInit {
   errorin:string;
   errorvac:string;
   errorot:string;
+  laedad:string="";
+  colonias:any;
   constructor(public h:HttpService,public http:HttpClient) {
-    setTimeout(()=>{
+    this.h.getseccionescolonia().subscribe((resp:any)=>{
+      this.colonias = resp;
+    });
     this.h.getsecciones().subscribe((resp:any)=>{
       this.secciones = resp;
     });
+    setTimeout(()=>{
       this.spin = false;
-    },1500);
+    },3500);
   }
+  changesec(colonia:string){
+    this.h.getseccionesC(colonia).subscribe((resp:any)=>{
+      this.secciones = resp;
+    });
+  }
+  calcularedad(fecha){
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
 
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+    this.laedad = edad.toString();
+  }
   elegirR(valor:string){
-    this.h.getrespProm(valor).subscribe((respuesta:any)=>{
-      this.seccionales = respuesta;
+    this.h.getColoniaS(valor).subscribe((respuesta:any)=>{
+      this.colonias = respuesta;
     });
 
   }
@@ -103,12 +123,6 @@ export class PromoverComponent implements OnInit {
       this.spin = false;
       return;
     }
-    if(!expreg.test(valor)){
-      this.errorin = "calle";
-      this.errorot = "calle";
-      this.spin = false;
-      return;
-    }
     valor = $("#interior").val();
     expreg = new RegExp("^[0-9]*$");
     if(!expreg.test(valor)){
@@ -138,12 +152,6 @@ export class PromoverComponent implements OnInit {
       this.spin = false;
       return;
     }
-    if(!expreg.test(valor)){
-      this.errorin = "colonia";
-      this.errorot = "colonia";
-      this.spin = false;
-      return;
-    }
     valor = $("#edad").val();
     expreg = new RegExp("^[0-9]*$");
     if(valor==""){
@@ -158,34 +166,11 @@ export class PromoverComponent implements OnInit {
       this.spin = false;
       return;
     }
-    valor = $("#seccion").val();
-    if(valor=="0" || valor == null){
-      this.errorin = "seccion";
-      this.errorvac = "seccion";
-      this.spin = false;
-      return;
-    }
     valor = $("#telefono").val();
     expreg = new RegExp("^[0-9]*$");
     if(!expreg.test(valor)){
       this.errorin = "telefono";
       this.errorot = "telefono";
-      this.spin = false;
-      return;
-    }
-    valor = $("#celular").val();
-    expreg = new RegExp("^[0-9]*$");
-    if(!expreg.test(valor)){
-      this.errorin = "celular";
-      this.errorot = "celular";
-      this.spin = false;
-      return;
-    }
-    valor = $("#correo").val();
-    expreg = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$");
-    if(!expreg.test(valor)){
-      this.errorin = "correo";
-      this.errorot = "correo";
       this.spin = false;
       return;
     }
@@ -272,21 +257,27 @@ export class PromoverComponent implements OnInit {
     fd.append('origen',form.value.origen);
     fd.append('observaciones',form.value.observaciones);
     setTimeout(()=>{
-      this.http.post("http://mapinfomich.com/Promovidos/setPromovido.php",fd).subscribe((respuesta:any)=>{
+      this.http.post("http://coplase.com.mx/Promovidos/setPromovido.php",fd).subscribe((respuesta:any)=>{
         this.resp = respuesta;
         console.log(respuesta);
       });
       setTimeout(()=>{
-        if(this.resp=="incorrecto"){
+        if(this.resp[0]=="incorrecto"){
           this.error = true;
           this.mensajer = "Hubo un error al momento de subir la información. Ya lo estamos revisando...";
         }else{
-          this.success = true;
-          this.mensajes = "Se ha subido correctamente el promovido...";
+          if(this.resp[0]=="Yaesta"){
+            this.error = true;
+            this.mensajer = " Esta persona ya fue promovida.";
+          }else{
+            this.success = true;
+            this.mensajes = "Se ha subido correctamente el promovido...";
+          }
+
         }
         this.spin = false;
-      },500);
-    },2000);
+      },3500);
+    },3000);
   }
 
   ngOnInit() {
