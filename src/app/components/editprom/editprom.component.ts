@@ -33,7 +33,20 @@ export class EditpromComponent implements OnInit {
     'materno': ''
   };
   laedad:string="";
-  colonias:string;
+  searchText:string;
+  colonias:any = {
+    'id': '',
+    'ENTIDAD': '',
+    'DISTRITO LOCAL': '',
+    'CABECERA DISTRITAL LOCAL': '',
+    'MUNICIPIO': '',
+    'NOMBRE': '',
+    'seccion': '',
+    'TIPO': '',
+    'COLONIA': '',
+    'CLASIFICACION': '',
+    'CP': ''
+  };
   constructor(public h:HttpService,public http:HttpClient,active:ActivatedRoute,private location: Location) {
     this.prom[0] = {
       'nombre': '',
@@ -79,18 +92,37 @@ export class EditpromComponent implements OnInit {
         'Distrital': resp[0].respdis,
         'Red':resp[0].respred
       }
-      console.log(this.seccionales);
       this.prom = resp;
+      this.searchText = this.prom[0].colonia;
     });
+
     setTimeout(()=>{
 
       this.spin = false;
     },3500);
   }
-  changesec(colonia:string){
-    this.h.getseccionesC(colonia).subscribe((resp:any)=>{
+  setear(valor:string){
+    this.searchText = valor;
+    console.log(this.searchText);
+    console.log(this.searchText);
+    this.h.getseccionesC(this.searchText).subscribe((resp:any)=>{
       this.secciones = resp;
     });
+    $(".listita").css('display','none');
+  }
+  changesec(colonia:string){
+
+  }
+  calcularedad(fecha){
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+    this.laedad = edad.toString();
   }
   elegirR(valor:string){
     this.h.getColoniaS(valor).subscribe((respuesta:any)=>{
@@ -104,17 +136,17 @@ export class EditpromComponent implements OnInit {
     this.errorin = "";
     this.errorvac = "";
     this.errorot = "";
-  }
-  calcularedad(fecha){
-    var hoy = new Date();
-    var cumpleanos = new Date(fecha);
-    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-    var m = hoy.getMonth() - cumpleanos.getMonth();
-
-    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-        edad--;
+    if(c.name == "colonia"){
+      $(".listita").css('display','inline-block');
     }
-    this.prom[0].edad = edad.toString();
+
+  }
+  yanoloquiero(event:KeyboardEvent){
+    if (event.key == "Tab" || event.key == "Escape") {
+       $(".listita").css('display','none');
+   }else{
+     $(".listita").css('display','inline-block');
+   }
   }
   newprom(form:any){
     console.log(form);
@@ -320,6 +352,7 @@ export class EditpromComponent implements OnInit {
           alert("Se editado correctamente el promovido...");
         }
         this.spin = false;
+        this.searchText = "";
         location.reload();
       },3500);
     },3000);

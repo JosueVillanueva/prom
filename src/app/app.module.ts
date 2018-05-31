@@ -21,6 +21,8 @@ import {ChangePipe} from './pipes/change.pipe';
 import { ImprimirComponent } from './components/imprimir/imprimir.component';
 import { EditrespComponent } from './components/editresp/editresp.component';
 import { DataTablesModule } from 'angular-datatables';
+import { FilterPipe} from './pipes/filter.pipe';
+import { FilterRespPipe} from './pipes/filterresp.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { DataTablesModule } from 'angular-datatables';
     PasswordPipe,
     ChangePipe,
     ImprimirComponent,
-    EditrespComponent
+    EditrespComponent,
+    FilterPipe,
+    FilterRespPipe
   ],
   imports: [
     BrowserModule,

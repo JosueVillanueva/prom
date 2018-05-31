@@ -22,6 +22,38 @@
 .mar-left-10{
   margin-left: 10px;
 }
+.listita{
+  position: absolute;
+  z-index: 999;
+  background-color: white;
+  width: 98%;
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid #ced4da;
+  border-top: 0px;
+  border-bottom-right-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+  padding: 0px;
+  max-height: 150px;
+  overflow-y: auto;
+  display: none;
+}
+.listitaresp{
+  position: absolute;
+  z-index: 999;
+  background-color: white;
+  width: 98%;
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid #ced4da;
+  border-top: 0px;
+  border-bottom-right-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+  padding: 0px;
+  max-height: 150px;
+  overflow-y: auto;
+  display: none;
+}
 .font12{
   font-size: 12px;
 }

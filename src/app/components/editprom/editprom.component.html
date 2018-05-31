@@ -98,10 +98,16 @@
 </div>
 <div class="col-md-6 mb-3">
   <label for="validationCustom05">Colonia</label>
-  <select class="form-control" id="colonia" (focus)="cambiarf(colonia)" [(ngModel)]="prom[0].colonia" [ngClass]="{invalid:errorin == 'colonia'}" (change)="changesec(colonia.value)" #colonia name="colonia" ngModel aria-describedby="inputGroupPrepend" required>
+  <!--<select class="form-control" id="colonia" (focus)="cambiarf(colonia)" [ngClass]="{invalid:errorin == 'colonia'}" (change)="changesec(colonia.value)" #colonia name="colonia" ngModel aria-describedby="inputGroupPrepend" required>
     <option value="0">Seleccione sección</option>
     <option *ngFor="let colonita of colonias" value="{{colonita.CLASIFICACION + ' ' + colonita.COLONIA}}">{{ colonita.COLONIA + " " + colonita.CLASIFICACION }}</option>
-  </select>
+  </select>-->
+  <input class="form-control" autocomplete="off" [(ngModel)]="searchText" id="colonia" (focus)="cambiarf(colonia)" (keydown)="yanoloquiero($event)" [ngClass]="{invalid:errorin == 'colonia'}" #colonia name="colonia" ngModel aria-describedby="inputGroupPrepend" required />
+  <ul class="listita">
+    <li *ngFor="let c of colonias | filter : searchText" (click)="setear(c.CLASIFICACION + ' ' + c.COLONIA)">
+      {{c.CLASIFICACION +" "+ c.COLONIA}}
+    </li>
+  </ul>
   <div [ngClass]="{show:errorvac == 'colonia'}" id="errcolonia" class="invalid-feedback">
     La colonia no puede estar vacio.
   </div>

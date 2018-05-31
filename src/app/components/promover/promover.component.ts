@@ -24,7 +24,23 @@ export class PromoverComponent implements OnInit {
   errorvac:string;
   errorot:string;
   laedad:string="";
-  colonias:any;
+  searchText:string;
+  colonias:any = {
+    'id': '',
+    'ENTIDAD': '',
+    'DISTRITO LOCAL': '',
+    'CABECERA DISTRITAL LOCAL': '',
+    'MUNICIPIO': '',
+    'NOMBRE': '',
+    'seccion': '',
+    'TIPO': '',
+    'COLONIA': '',
+    'CLASIFICACION': '',
+    'CP': ''
+  };
+  responsables:any;
+  red:any;
+  searchTextresp:string;
   constructor(public h:HttpService,public http:HttpClient) {
     this.h.getseccionescolonia().subscribe((resp:any)=>{
       this.colonias = resp;
@@ -32,14 +48,26 @@ export class PromoverComponent implements OnInit {
     this.h.getsecciones().subscribe((resp:any)=>{
       this.secciones = resp;
     });
+    this.h.getrespred("todos").subscribe((resp:any)=>{
+      this.red = resp;
+    });
     setTimeout(()=>{
       this.spin = false;
     },3500);
   }
-  changesec(colonia:string){
-    this.h.getseccionesC(colonia).subscribe((resp:any)=>{
+  setear(valor:string){
+    this.searchText = valor;
+    this.h.getseccionesC(this.searchText).subscribe((resp:any)=>{
       this.secciones = resp;
     });
+    $(".listita").css('display','none');
+  }
+  setearresp(valor:string){
+    this.searchTextresp = valor;
+    $(".listitaresp").css('display','none');
+  }
+  changesec(colonia:string){
+
   }
   calcularedad(fecha){
     var hoy = new Date();
@@ -56,7 +84,6 @@ export class PromoverComponent implements OnInit {
     this.h.getColoniaS(valor).subscribe((respuesta:any)=>{
       this.colonias = respuesta;
     });
-
   }
   cambiarf(c:any){
     $("#"+c.name).attr('class','form-control valid ng-touched');
@@ -65,6 +92,27 @@ export class PromoverComponent implements OnInit {
     this.errorin = "";
     this.errorvac = "";
     this.errorot = "";
+    if(c.name == "colonia"){
+      $(".listita").css('display','inline-block');
+    }
+    if(c.name == "red"){
+      $(".listitaresp").css('display','inline-block');
+    }
+
+  }
+  yanoloquiero(event:KeyboardEvent){
+    if (event.key == "Tab" || event.key == "Escape") {
+       $(".listita").css('display','none');
+   }else{
+     $(".listita").css('display','inline-block');
+   }
+  }
+  yanoloquieroresp(event:KeyboardEvent){
+    if (event.key == "Tab" || event.key == "Escape") {
+       $(".listitaresp").css('display','none');
+   }else{
+     $(".listitaresp").css('display','inline-block');
+   }
   }
   newprom(form:any){
     console.log(form);
@@ -272,6 +320,8 @@ export class PromoverComponent implements OnInit {
           }else{
             this.success = true;
             this.mensajes = "Se ha subido correctamente el promovido...";
+            this.searchText = "";
+            this.searchTextresp="";
           }
 
         }
